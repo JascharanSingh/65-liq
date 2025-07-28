@@ -1,14 +1,15 @@
 // src/components/Header.jsx
 import React from "react";
 import { FaShoppingCart, FaStore } from "react-icons/fa";
-import logo from "../assets/logo.png"; // correct relative path from src/components
 
 const Header = () => {
   return (
-    <header className="bg-white py-2 border-bottom">
+    <header className="bg-white py-2 border-bottom shadow-sm">
       <div className="container d-flex align-items-center justify-content-between">
-        <img src={logo} alt="Total Wine & More" height="35" />
+        {/* Store name */}
+        <h5 className="mb-0 fw-bold">65 Liquor Store</h5>
 
+        {/* Search bar */}
         <div className="flex-grow-1 mx-3">
           <div className="input-group">
             <input
@@ -20,6 +21,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Store pickup info */}
         <div className="d-none d-md-flex align-items-center me-3">
           <FaStore className="me-2" />
           <div>
@@ -28,6 +30,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Cart icon */}
         <FaShoppingCart size={20} />
       </div>
     </header>

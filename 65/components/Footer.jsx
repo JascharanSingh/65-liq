@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <footer className="bg-dark text-light mt-auto">
       <div className="container py-4">
-        <div className="row gy-4">
+        <div className="row">
           {/* About Us */}
-          <div className="col-sm-6 col-md-3">
+          <div className="col-6 col-md-3">
             <h6>About Us</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-light text-decoration-none">Our Company</a></li>
@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
 
           {/* Store */}
-          <div className="col-sm-6 col-md-3">
+          <div className="col-6 col-md-3">
             <h6>Store</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-light text-decoration-none">Store Locator</a></li>
@@ -32,7 +32,7 @@ const Footer = () => {
           </div>
 
           {/* Customer Service */}
-          <div className="col-sm-6 col-md-3">
+          <div className="col-6 col-md-3">
             <h6>Customer Service</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-light text-decoration-none">Contact Us</a></li>
@@ -44,8 +44,8 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal / App / Social */}
-          <div className="col-sm-6 col-md-3">
+          {/* Legal */}
+          <div className="col-6 col-md-3">
             <h6>Legal</h6>
             <ul className="list-unstyled">
               <li><a href="#" className="text-light text-decoration-none">Terms & Conditions</a></li>
@@ -56,10 +56,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="border-light mt-4" />
+        <hr className="border-secondary mt-4" />
 
         <div className="text-center small text-muted">
-          © 2025 Your Company Name. All rights reserved.
+          © 2025 Total Wine & More. All rights reserved.
         </div>
       </div>
     </footer>
