@@ -12,7 +12,7 @@ const filters = ["Sale", "New", "Gluten-Free", "Organic", "Kosher", "Local"];
 
 const WineAndSpirits = () => {
   return (
-    <section className="wine-section py-5">
+    <section id="shop-section" className="wine-section py-5">
       <div className="container">
         {/* Title */}
         <h2 className="section-title text-center mb-4">Wine & Spirits</h2>

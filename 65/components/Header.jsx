@@ -12,7 +12,7 @@ const Header = () => {
         className="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-n1"
       />
 
-      {/* Glass-style navbar — no Bootstrap container */}
+      {/* Glass-style navbar */}
       <div className="glass-navbar d-flex align-items-center justify-content-between flex-wrap gap-3 py-2 px-4 position-relative w-100">
         {/* Store logo */}
         <img
@@ -60,6 +60,18 @@ const Header = () => {
         {/* Cart Icon */}
         <FaShoppingCart className="text-white" size={18} />
       </div>
+
+{/* Shop Now Section with Glass Text */}
+
+<div className="position-absolute top-50 start-50 translate-middle text-center">
+  <div className="d-flex flex-column align-items-center gap-3">
+    <div className="text-center mb-2">
+      <h1 className="glass-text">Premium Collection</h1>
+      <p className="glass-subtext">Finest Spirits, Handpicked for Connoisseurs</p>
+    </div>
+    <a href="#shop-section" className="shop-now-btn">Shop Now</a>
+  </div>
+</div>
     </header>
   );
 };

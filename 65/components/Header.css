@@ -1,4 +1,4 @@
-/* Frosted navbar */
+/* ===== Frosted Glass Navbar ===== */
 .glass-navbar {
   background-color: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(12px);
@@ -7,7 +7,7 @@
   z-index: 2;
 }
 
-/* Search input blur style */
+/* ===== Search Input Blur Style ===== */
 .search-input {
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(6px);
@@ -26,4 +26,77 @@
   background-color: rgba(255, 255, 255, 0.3);
   outline: none;
   box-shadow: none;
+}
+
+/* ===== Shop Now Button ===== */
+.shop-now-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.65rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  text-decoration: none;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.shop-now-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFDCA8;
+  text-decoration: none;
+}
+
+/* ===== Hero Text (if needed again later) ===== */
+.hero-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #F5E7C4;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtext {
+  color: #e5d6b5;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Glass Text & Subtext ===== */
+.glass-text {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(
+    135deg,
+    rgb(255, 255, 255) 100%,
+    rgb(255, 255, 255) 100%,
+    rgb(255, 255, 255) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+}
+
+.glass-subtext {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: linear-gradient(
+    535deg,
+    rgb(255, 255, 255) 100%,
+    rgb(255, 255, 255) 100%,
+    rgb(255, 255, 255) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
 }
