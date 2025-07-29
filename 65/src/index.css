@@ -13,6 +13,7 @@ body {
   font-size: 16px;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
   font-weight: 600;
@@ -179,4 +180,9 @@ a:hover {
 .footer-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   margin-top: 2rem;
+}
+
+.search-input::placeholder {
+  color: white;
+  opacity: 1; /* Optional: make sure it's fully visible */
 }
