@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer-glass-wrapper mt-auto position-relative">
       {/* Background Image */}
       <img
-        src="/public/images/footer-img.jpg"
+        src="/images/footer-img.jpg"
         loading="lazy"
         alt="footer background"
         className="footer-bg-img"
