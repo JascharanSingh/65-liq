@@ -1,0 +1,182 @@
+/* ===== Base Reset ===== */
+body, h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Global Typography & Layout ===== */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #FAF7F5;
+  color: #1F1F1F;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: #1F1F1F;
+}
+
+a {
+  color: #E97451;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #cc593b;
+  text-decoration: underline;
+}
+
+/* ===== Header Image + Glass Navbar ===== */
+.header-image-wrapper {
+  position: relative;
+  height: 95vh; /* 65% of the viewport height */
+  overflow: hidden;
+}
+
+.header-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(70%);
+}
+
+.glass-navbar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  max-width: 95%;
+  padding: 0.75rem 1.25rem;
+}
+
+.store-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+/* ===== Buttons ===== */
+.btn-sienna {
+  background-color: #D2A050; /* New golden tone */
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-sienna:hover {
+  background-color: #b4873c; /* Darker hover tone */
+  color: #ffffff;
+}
+
+.btn-sienna-outline {
+  color: #E97451;
+  border: 1px solid #E97451;
+  background-color: transparent;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-sienna-outline:hover {
+  background-color: #E97451;
+  color: #ffffff;
+}
+
+/* ===== Wine & Spirits Section ===== */
+.section {
+  padding: 60px 0;
+  background-color: #FAF7F5;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #1F1F1F;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.category-link {
+  display: inline-block;
+  color: #1F1F1F;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.category-link:hover {
+  color: #E97451;
+  text-decoration: underline;
+}
+
+
+/* ===== Footer with Glassmorphism & Background Image ===== */
+.footer-glass-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 50vh; /* Covers bottom half of screen */
+  overflow: hidden;
+}
+
+.footer-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  filter: brightness(70%) saturate(130%);
+}
+
+.footer-glass-content {
+  position: relative;
+  z-index: 2;
+  width: 100vw; /* Full viewport width */
+  height: 100%;
+  padding: 4rem 3rem;
+  background: rgba(30, 20, 20, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  color: white;
+  text-align: left;
+}
+
+.footer-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FFD2A6;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #FFD2A6;
+  text-decoration: underline;
+}
+
+.footer-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 2rem;
+}

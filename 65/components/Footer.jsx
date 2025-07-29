@@ -3,63 +3,53 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light mt-auto">
-      <div className="container py-4">
-        <div className="row">
-          {/* About Us */}
-          <div className="col-6 col-md-3">
-            <h6>About Us</h6>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-light text-decoration-none">Our Company</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Community Impact</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Social Responsibility</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Careers</a></li>
-              <li><a href="#" className="text-light text-decoration-none">For the Media</a></li>
-              <li><a href="#" className="text-light text-decoration-none">For the Trade</a></li>
-            </ul>
+    <footer className="footer-glass-wrapper mt-auto position-relative">
+      {/* Background Image */}
+      <img
+        src="/footer-img.jpg"
+        alt="footer background"
+        className="footer-bg-img"
+      />
+
+      {/* Glass Overlay */}
+      <div className="footer-glass-content">
+        <div className="container-fluid py-5">
+          <div className="row justify-content-center">
+            {/* About */}
+            <div className="col-6 col-md-3 mb-4">
+              <h6 className="footer-heading">About</h6>
+              <ul className="list-unstyled">
+                <li><a href="#" className="footer-link">Our Company</a></li>
+                <li><a href="#" className="footer-link">Careers</a></li>
+                <li><a href="#" className="footer-link">Contact</a></li>
+              </ul>
+            </div>
+
+            {/* Store */}
+            <div className="col-6 col-md-3 mb-4">
+              <h6 className="footer-heading">Store</h6>
+              <ul className="list-unstyled">
+                <li><a href="#" className="footer-link">Store Locator</a></li>
+                <li><a href="#" className="footer-link">Gift Cards</a></li>
+                <li><a href="#" className="footer-link">Events</a></li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div className="col-6 col-md-3 mb-4">
+              <h6 className="footer-heading">Legal</h6>
+              <ul className="list-unstyled">
+                <li><a href="#" className="footer-link">Privacy Policy</a></li>
+                <li><a href="#" className="footer-link">Terms & Conditions</a></li>
+              </ul>
+            </div>
           </div>
 
-          {/* Store */}
-          <div className="col-6 col-md-3">
-            <h6>Store</h6>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-light text-decoration-none">Store Locator</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Classes & Events</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Book Our Room</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Gift Cards</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Weddings</a></li>
-            </ul>
+          <hr className="footer-divider mt-4" />
+
+          <div className="text-center small text-light mt-3">
+            © 2025 65 Liquor Store. All rights reserved.
           </div>
-
-          {/* Customer Service */}
-          <div className="col-6 col-md-3">
-            <h6>Customer Service</h6>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-light text-decoration-none">Contact Us</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Order Status</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Delivery</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Shipping</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Returns</a></li>
-              <li><a href="#" className="text-light text-decoration-none">FAQ</a></li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div className="col-6 col-md-3">
-            <h6>Legal</h6>
-            <ul className="list-unstyled">
-              <li><a href="#" className="text-light text-decoration-none">Terms & Conditions</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Privacy Policy</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Accessibility Policy</a></li>
-              <li><a href="#" className="text-light text-decoration-none">Sitemap</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <hr className="border-secondary mt-4" />
-
-        <div className="text-center small text-muted">
-          © 2025 Total Wine & More. All rights reserved.
         </div>
       </div>
     </footer>

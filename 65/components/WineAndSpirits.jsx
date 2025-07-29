@@ -12,27 +12,35 @@ const filters = ["Sale", "New", "Gluten-Free", "Organic", "Kosher", "Local"];
 
 const WineAndSpirits = () => {
   return (
-    <div className="container py-15">
-      <h4 className="fw-bold mb-3">Wine & Spirits</h4>
+    <section className="wine-section py-5">
+      <div className="container">
+        {/* Title */}
+        <h2 className="section-title text-center mb-4">Wine & Spirits</h2>
 
-      <div className="mb-4 d-flex flex-wrap gap-2">
-        {filters.map((filter, index) => (
-          <button key={index} className="btn btn-outline-secondary btn-sm rounded-pill">
-            {filter}
-          </button>
-        ))}
-      </div>
+        {/* Filter Pills */}
+        <div className="mb-5 d-flex flex-wrap justify-content-center gap-2">
+          {filters.map((filter, index) => (
+            <button
+              key={index}
+              className="btn btn-sienna-outline btn-sm rounded-pill px-3"
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
 
-      <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-2">
-        {categories.map((category, index) => (
-          <div key={index} className="col">
-            <span className="text-decoration-none text-dark d-inline-block">
-              {category}
-            </span>
-          </div>
-        ))}
+        {/* Category Grid */}
+        <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-4">
+          {categories.map((category, index) => (
+            <div key={index} className="col">
+              <a href="#" className="category-link d-block text-center">
+                {category}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
