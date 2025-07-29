@@ -7,6 +7,7 @@ const Footer = () => {
       {/* Background Image */}
       <img
         src="/public/images/footer-img.jpg"
+        loading="lazy"
         alt="footer background"
         className="footer-bg-img"
       />
