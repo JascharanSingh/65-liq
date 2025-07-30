@@ -65,9 +65,9 @@ const Header = () => {
 
 <div className="position-absolute top-50 start-50 translate-middle text-center">
   <div className="d-flex flex-column align-items-center gap-3">
-    <div className="text-center mb-2">
-      <h1 className="glass-text">Premium Collection</h1>
-      <p className="glass-subtext">Finest Spirits, Handpicked for Connoisseurs</p>
+    <div className="glass-banner text-center p-4 px-5">
+      <h1 className="glass-text mb-2">Premium Collection</h1>
+      <p className="glass-subtext mb-0">Finest Spirits Handpicked for Connoisseurs</p>
     </div>
     <a href="#shop-section" className="shop-now-btn">Shop Now</a>
   </div>

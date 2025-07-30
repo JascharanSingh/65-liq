@@ -1,0 +1,1237 @@
+[
+  {
+    "id": 101,
+    "title": "Ruffino Moscato",
+    "price": "$21.99",
+    "description": "Sweet and bubbly Italian wine.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/bottles/jameson.webp"
+  },
+  {
+    "id": 1012,
+    "title": "Ketel One Vodka",
+    "price": "$29.99",
+    "description": "Crisp, clean, and smooth Dutch vodka.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/ketel-one.jpg"
+  },
+  {
+    "id": 1011,
+    "title": "Casamigos Blanco Tequila",
+    "price": "$49.99",
+    "description": "Smooth and approachable tequila, perfect for sipping or cocktails.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/casamigos-blanco.jpg"
+  },
+  {
+    "id": 1014,
+    "title": "Johnnie Walker Black Label",
+    "price": "$39.99",
+    "description": "Rich and smoky blended Scotch whisky.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/johnnie-walker-black.jpg"
+  },
+  {
+    "id": 1015,
+    "title": "Aperol Aperitivo",
+    "price": "$26.99",
+    "description": "Vibrant orange aperitif, essential for an Aperol Spritz.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/aperol.jpg"
+  },
+  {
+    "id": 1016,
+    "title": "La Marca Prosecco",
+    "price": "$17.99",
+    "description": "Elegant and refreshing Italian sparkling wine.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/la-marca-prosecco.jpg"
+  },
+  {
+    "id": 1017,
+    "title": "Hendrick's Gin",
+    "price": "$38.99",
+    "description": "Unusual gin with cucumber and rose notes.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/hendricks-gin.jpg"
+  },
+  {
+    "id": 1018,
+    "title": "Woodford Reserve Bourbon",
+    "price": "$34.99",
+    "description": "Balanced and complex Kentucky straight bourbon whiskey.",
+    "category": "Shop",
+    "subcategory": "Best Sellers",
+    "tags": ["best sellers"],
+    "image": "/images/woodford-reserve.jpg"
+  },
+  {
+    "id": 102,
+    "title": "Absolut Vodka",
+    "price": "$32.99",
+    "description": "Smooth, clean taste from Sweden.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/absolut.jpg"
+  },
+  {
+    "id": 1021,
+    "title": "High Noon Pineapple Seltzer",
+    "price": "$18.99",
+    "description": "Refreshing hard seltzer made with real vodka and juice.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/high-noon-pineapple.jpg"
+  },
+  {
+    "id": 1022,
+    "title": "Meiomi Pinot Noir",
+    "price": "$21.99",
+    "description": "Expressive and rich California Pinot Noir.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/meiomi-pinot-noir.jpg"
+  },
+  {
+    "id": 1023,
+    "title": "Bombay Sapphire Gin",
+    "price": "$27.99",
+    "description": "Bright and aromatic London Dry Gin.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/bombay-sapphire.jpg"
+  },
+  {
+    "id": 1024,
+    "title": "White Claw Variety Pack",
+    "price": "$16.99",
+    "description": "Popular hard seltzer with various fruity flavors.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/white-claw.jpg"
+  },
+  {
+    "id": 1025,
+    "title": "Espresso Martini Mix",
+    "price": "$14.99",
+    "description": "Pre-made mix for a quick and delicious espresso martini.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/espresso-martini-mix.jpg"
+  },
+  {
+    "id": 1026,
+    "title": "Ghost Tequila Spicy Blanco",
+    "price": "$34.99",
+    "description": "Blanco tequila infused with a hint of ghost pepper.",
+    "category": "Shop",
+    "subcategory": "Trending",
+    "tags": ["trending"],
+    "image": "/images/ghost-tequila.jpg"
+  },
+  {
+    "id": 103,
+    "title": "Barefoot Moscato",
+    "price": "$10.99",
+    "description": "Light and fruity — great value!",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/barefoot.jpg"
+  },
+  {
+    "id": 1031,
+    "title": "Apothic Red Blend",
+    "price": "$9.99",
+    "description": "Smooth and rich red blend with dark fruit flavors.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/apothic-red.jpg"
+  },
+  {
+    "id": 1032,
+    "title": "Svedka Vodka",
+    "price": "$16.99",
+    "description": "Affordable and versatile Swedish vodka.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/svedka.jpg"
+  },
+  {
+    "id": 1033,
+    "title": "Kendall-Jackson Chardonnay",
+    "price": "$13.99",
+    "description": "America's favorite Chardonnay, rich and balanced.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/kendall-jackson-chardonnay.jpg"
+  },
+  {
+    "id": 1034,
+    "title": "Bacardi Superior Rum",
+    "price": "$14.99",
+    "description": "Classic white rum, perfect for mojitos.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/bacardi-superior.jpg"
+  },
+  {
+    "id": 1035,
+    "title": "Yellow Tail Cabernet Sauvignon",
+    "price": "$7.99",
+    "description": "Smooth and easy-drinking Australian Cabernet.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/yellow-tail-cabernet.jpg"
+  },
+  {
+    "id": 1036,
+    "title": "Jose Cuervo Especial Tequila",
+    "price": "$19.99",
+    "description": "Classic gold tequila for margaritas.",
+    "category": "Shop",
+    "subcategory": "On Sale",
+    "tags": ["on sale"],
+    "image": "/images/jose-cuervo.jpg"
+  },
+  {
+    "id": 104,
+    "title": "Don Julio Blanco",
+    "price": "$45.99",
+    "description": "Premium tequila perfect for mixing.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/don-julio.jpg"
+  },
+  {
+    "id": 1041,
+    "title": "Highland Park Cask Strength",
+    "price": "$89.99",
+    "description": "Bold and intense single malt Scotch.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/highland-park-cask-strength.jpg"
+  },
+  {
+    "id": 1042,
+    "title": "The Prisoner Wine Company Saldo Zinfandel",
+    "price": "$32.99",
+    "description": "Rich and robust Zinfandel from California.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/saldo-zinfandel.jpg"
+  },
+  {
+    "id": 1043,
+    "title": "WhistlePig PiggyBack Rye",
+    "price": "$42.99",
+    "description": "100% rye whiskey, aged 6 years.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/whistlepig-piggyback-rye.jpg"
+  },
+  {
+    "id": 1044,
+    "title": "Ketel One Botanical Peach & Orange Blossom",
+    "price": "$22.99",
+    "description": "Vodka infused with natural fruit and botanical essences.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/ketel-one-botanical-peach.jpg"
+  },
+  {
+    "id": 1045,
+    "title": "Diplomático Reserva Exclusiva Rum",
+    "price": "$39.99",
+    "description": "Award-winning dark sipping rum from Venezuela.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/diplomatico-reserva.jpg"
+  },
+  {
+    "id": 1046,
+    "title": "Miraval Rosé",
+    "price": "$24.99",
+    "description": "Elegant and refreshing rosé from Provence.",
+    "category": "Shop",
+    "subcategory": "New Arrivals",
+    "tags": ["new arrivals"],
+    "image": "/images/miraval-rose.jpg"
+  },
+  {
+    "id": 1,
+    "title": "Jameson Irish Whiskey",
+    "price": "$32.99",
+    "description": "Smooth and triple-distilled Irish whiskey.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/jameson.jpg"
+  },
+  {
+    "id": 1001,
+    "title": "Redbreast 12 Year Old",
+    "price": "$64.99",
+    "description": "Single pot still Irish whiskey, rich and spicy.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/redbreast-12.jpg"
+  },
+  {
+    "id": 1002,
+    "title": "Teeling Small Batch Irish Whiskey",
+    "price": "$36.99",
+    "description": "Blended and finished in rum casks, unique flavor.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/teeling-small-batch.jpg"
+  },
+  {
+    "id": 1003,
+    "title": "Bushmills Original Irish Whiskey",
+    "price": "$26.99",
+    "description": "Classic blend, smooth and approachable.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/bushmills-original.jpg"
+  },
+  {
+    "id": 1004,
+    "title": "Powers Gold Label Irish Whiskey",
+    "price": "$28.99",
+    "description": "Full-bodied and spicy Irish whiskey.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/powers-gold-label.jpg"
+  },
+  {
+    "id": 1005,
+    "title": "Tullamore D.E.W. Irish Whiskey",
+    "price": "$29.99",
+    "description": "Triple distilled, triple blended Irish whiskey.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/tullamore-dew.jpg"
+  },
+  {
+    "id": 1006,
+    "title": "Slane Irish Whiskey",
+    "price": "$31.99",
+    "description": "Triple casked for rich, complex flavor.",
+    "category": "Whiskey",
+    "subcategory": "Irish",
+    "image": "/images/slane-irish.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Crown Royal Canadian",
+    "price": "$35.50",
+    "description": "Iconic Canadian blend with a smooth finish.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/crown-royal.jpg"
+  },
+  {
+    "id": 3001,
+    "title": "Wiser's Deluxe Canadian Whisky",
+    "price": "$22.99",
+    "description": "Smooth and rich, a Canadian classic.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/wisers-deluxe.jpg"
+  },
+  {
+    "id": 3002,
+    "title": "Forty Creek Barrel Select",
+    "price": "$27.99",
+    "description": "Complex Canadian whisky with notes of honey and vanilla.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/forty-creek.jpg"
+  },
+  {
+    "id": 3003,
+    "title": "JP Wiser's Old 9 Decades",
+    "price": "$29.99",
+    "description": "Aged 9 years, smooth and mellow.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/jp-wisers-9.jpg"
+  },
+  {
+    "id": 3004,
+    "title": "Alberta Premium Cask Strength Rye",
+    "price": "$59.99",
+    "description": "Award-winning 100% rye whisky, bold and spicy.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/alberta-premium-rye.jpg"
+  },
+  {
+    "id": 3005,
+    "title": "Crown Royal Peach Flavored",
+    "price": "$29.99",
+    "description": "Limited edition Crown Royal with a sweet peach flavor.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/crown-royal-peach.jpg"
+  },
+  {
+    "id": 3006,
+    "title": "Canadian Mist Whisky",
+    "price": "$18.99",
+    "description": "Light and smooth Canadian whisky, great for mixing.",
+    "category": "Whiskey",
+    "subcategory": "Canadian",
+    "image": "/images/canadian-mist.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Maker's Mark Bourbon",
+    "price": "$29.95",
+    "description": "Classic Kentucky bourbon with caramel notes.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/makers-mark.jpg"
+  },
+  {
+    "id": 5001,
+    "title": "Jim Beam Kentucky Straight Bourbon",
+    "price": "$19.99",
+    "description": "America's best-selling bourbon.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/jim-beam.jpg"
+  },
+  {
+    "id": 5002,
+    "title": "Buffalo Trace Kentucky Straight Bourbon",
+    "price": "$28.99",
+    "description": "Award-winning bourbon, rich and complex.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/buffalo-trace.jpg"
+  },
+  {
+    "id": 5003,
+    "title": "Wild Turkey 101 Bourbon",
+    "price": "$24.99",
+    "description": "High-proof bourbon with a bold, spicy character.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/wild-turkey-101.jpg"
+  },
+  {
+    "id": 5004,
+    "title": "Bulleit Bourbon Frontier Whiskey",
+    "price": "$27.99",
+    "description": "High-rye content bourbon for a spicier taste.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/bulleit-bourbon.jpg"
+  },
+  {
+    "id": 5005,
+    "title": "Knob Creek Kentucky Straight Bourbon",
+    "price": "$34.99",
+    "description": "Small batch bourbon, aged 9 years for deep flavor.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/knob-creek.jpg"
+  },
+  {
+    "id": 5006,
+    "title": "Four Roses Small Batch Bourbon",
+    "price": "$31.99",
+    "description": "Expertly blended for a rich and mellow taste.",
+    "category": "Whiskey",
+    "subcategory": "Bourbon",
+    "image": "/images/four-roses-small-batch.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Canadian Club 100% Rye",
+    "price": "$29.99",
+    "description": "Rye-forward Canadian whiskey with a bold finish.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/canadian-club.jpg"
+  },
+  {
+    "id": 9001,
+    "title": "Rittenhouse Rye Bottled-in-Bond",
+    "price": "$26.99",
+    "description": "Classic Kentucky rye, high proof and spicy.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/rittenhouse-rye.jpg"
+  },
+  {
+    "id": 9002,
+    "title": "Old Overholt Straight Rye Whiskey",
+    "price": "$21.99",
+    "description": "Historic American rye whiskey.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/old-overholt-rye.jpg"
+  },
+  {
+    "id": 9003,
+    "title": "Sazerac Rye Whiskey",
+    "price": "$34.99",
+    "description": "The quintessential New Orleans rye.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/sazerac-rye.jpg"
+  },
+  {
+    "id": 9004,
+    "title": "Knob Creek Rye Whiskey",
+    "price": "$32.99",
+    "description": "Bold and spicy small batch rye.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/knob-creek-rye.jpg"
+  },
+  {
+    "id": 9005,
+    "title": "Templeton Rye American Whiskey",
+    "price": "$38.99",
+    "description": "Smooth and spicy, 'The Good Stuff' from Iowa.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/templeton-rye.jpg"
+  },
+  {
+    "id": 9006,
+    "title": "WhistlePig 10 Year Small Batch Rye",
+    "price": "$79.99",
+    "description": "Premium 100% rye whiskey, complex and balanced.",
+    "category": "Whiskey",
+    "subcategory": "Rye",
+    "image": "/images/whistlepig-10-year.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Tito's Handmade Vodka",
+    "price": "$28.99",
+    "description": "Crafted in Austin, Texas — gluten-free and smooth.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/titos.jpg"
+  },
+  {
+    "id": 2001,
+    "title": "Smirnoff No. 21 Vodka",
+    "price": "$17.99",
+    "description": "Triple distilled, exceptionally smooth vodka.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/smirnoff.jpg"
+  },
+  {
+    "id": 2002,
+    "title": "New Amsterdam Vodka",
+    "price": "$15.99",
+    "description": "Five times distilled for ultimate smoothness.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/new-amsterdam-vodka.jpg"
+  },
+  {
+    "id": 2003,
+    "title": "Sobieski Vodka",
+    "price": "$13.99",
+    "description": "Authentic Polish rye vodka.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/sobieski.jpg"
+  },
+  {
+    "id": 2004,
+    "title": "Prairie Organic Vodka",
+    "price": "$24.99",
+    "description": "Crafted from organic corn in Minnesota.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/prairie-organic.jpg"
+  },
+  {
+    "id": 2005,
+    "title": "Kirkland Signature American Vodka",
+    "price": "$12.99",
+    "description": "Cost-effective and smooth vodka.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/kirkland-vodka.jpg"
+  },
+  {
+    "id": 2006,
+    "title": "Chopin Potato Vodka",
+    "price": "$29.99",
+    "description": "Single-ingredient potato vodka, rich and creamy.",
+    "category": "Vodka",
+    "subcategory": "Plain",
+    "image": "/images/chopin-potato.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Grey Goose Vodka",
+    "price": "$44.99",
+    "description": "French vodka with unparalleled smoothness.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/grey-goose.jpg"
+  },
+  {
+    "id": 4001,
+    "title": "Belvedere Vodka",
+    "price": "$39.99",
+    "description": "Polish luxury rye vodka, smooth and pure.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/belvedere.jpg"
+  },
+  {
+    "id": 4002,
+    "title": "Cîroc Snap Frost Vodka",
+    "price": "$34.99",
+    "description": "Grape-based French vodka, exceptionally smooth.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/ciroc-snap-frost.jpg"
+  },
+  {
+    "id": 4003,
+    "title": " elit by Stolichnaya",
+    "price": "$49.99",
+    "description": "Ultra-premium vodka, freeze-filtered for purity.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/stoli-elit.jpg"
+  },
+  {
+    "id": 4004,
+    "title": "Haku Vodka",
+    "price": "$29.99",
+    "description": "Japanese craft vodka made from 100% white rice.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/haku-vodka.jpg"
+  },
+  {
+    "id": 4005,
+    "title": "Absolut Elyx Vodka",
+    "price": "$44.99",
+    "description": "Single estate wheat vodka, silky smooth.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/absolut-elyx.jpg"
+  },
+  {
+    "id": 4006,
+    "title": "Crystal Head Vodka",
+    "price": "$54.99",
+    "description": "Pure Canadian vodka in a unique skull bottle.",
+    "category": "Vodka",
+    "subcategory": "Premium",
+    "image": "/images/crystal-head-vodka.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Red Blend Wine",
+    "price": "$15.99",
+    "description": "Bold red blend with cherry and vanilla notes.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/red-blend.jpg"
+  },
+  {
+    "id": 6001,
+    "title": "Cabernet Sauvignon",
+    "price": "$18.99",
+    "description": "Full-bodied red with notes of blackcurrant and cedar.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/cabernet-sauvignon.jpg"
+  },
+  {
+    "id": 6002,
+    "title": "Merlot",
+    "price": "$14.99",
+    "description": "Soft and approachable red with plum and chocolate notes.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/merlot.jpg"
+  },
+  {
+    "id": 6003,
+    "title": "Pinot Noir",
+    "price": "$22.99",
+    "description": "Elegant and light-bodied red with red berry aromas.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/pinot-noir.jpg"
+  },
+  {
+    "id": 6004,
+    "title": "Zinfandel",
+    "price": "$19.99",
+    "description": "Bold and spicy red, often with jammy fruit flavors.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/zinfandel.jpg"
+  },
+  {
+    "id": 6005,
+    "title": "Malbec",
+    "price": "$16.99",
+    "description": "Smooth and fruit-forward red from Argentina.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/malbec.jpg"
+  },
+  {
+    "id": 6006,
+    "title": "Shiraz/Syrah",
+    "price": "$17.99",
+    "description": "Rich and peppery red, great with grilled meats.",
+    "category": "Wine",
+    "subcategory": "Red",
+    "image": "/images/shiraz.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Rosé All Day",
+    "price": "$12.49",
+    "description": "Crisp rosé perfect for summer sipping.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/rose.jpg"
+  },
+  {
+    "id": 7001,
+    "title": "Provence Rosé",
+    "price": "$19.99",
+    "description": "Dry and delicate, quintessential French rosé.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/provence-rose.jpg"
+  },
+  {
+    "id": 7002,
+    "title": "Whispering Angel Rosé",
+    "price": "$24.99",
+    "description": "Popular and elegant rosé from Provence.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/whispering-angel.jpg"
+  },
+  {
+    "id": 7003,
+    "title": "Beringer White Zinfandel",
+    "price": "$8.99",
+    "description": "Sweet and fruity blush wine.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/beringer-white-zinfandel.jpg"
+  },
+  {
+    "id": 7004,
+    "title": "Château Minuty Rosé",
+    "price": "$27.99",
+    "description": "Premium Provence rosé, fresh and vibrant.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/chateau-minuty-rose.jpg"
+  },
+  {
+    "id": 7005,
+    "title": "Fleur de Mer Rosé",
+    "price": "$16.99",
+    "description": "Crisp and refreshing rosé with red fruit notes.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/fleur-de-mer-rose.jpg"
+  },
+  {
+    "id": 7006,
+    "title": "Sancerre Rosé",
+    "price": "$21.99",
+    "description": "Dry and mineral-driven rosé from the Loire Valley.",
+    "category": "Wine",
+    "subcategory": "Rosé",
+    "image": "/images/sancerre-rose.jpg"
+  },
+  {
+    "id": 8,
+    "title": "Moët & Chandon Brut",
+    "price": "$59.99",
+    "description": "Iconic French sparkling champagne.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/moet.jpg"
+  },
+  {
+    "id": 8001,
+    "title": "Veuve Clicquot Brut Yellow Label",
+    "price": "$64.99",
+    "description": "Renowned Champagne, elegant and balanced.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/veuve-clicquot.jpg"
+  },
+  {
+    "id": 8002,
+    "title": "Dom Pérignon Vintage Champagne",
+    "price": "$229.99",
+    "description": "Prestigious vintage Champagne, luxurious and complex.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/dom-perignon.jpg"
+  },
+  {
+    "id": 8003,
+    "title": "Korbel California Champagne Brut",
+    "price": "$14.99",
+    "description": "Classic American sparkling wine, crisp and dry.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/korbel-brut.jpg"
+  },
+  {
+    "id": 8004,
+    "title": "Prosecco DOC",
+    "price": "$13.99",
+    "description": "Italian sparkling wine, light and fruity.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/prosecco-doc.jpg"
+  },
+  {
+    "id": 8005,
+    "title": "Freixenet Cava Brut",
+    "price": "$11.99",
+    "description": "Popular Spanish sparkling wine, crisp and refreshing.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/freixenet-cava.jpg"
+  },
+  {
+    "id": 8006,
+    "title": "Chandon Brut Sparkling Wine",
+    "price": "$21.99",
+    "description": "California sparkling wine from Moët & Chandon.",
+    "category": "Wine",
+    "subcategory": "Sparkling",
+    "image": "/images/chandon-brut.jpg"
+  },
+  {
+    "id": 201,
+    "title": "Captain Morgan Spiced Rum",
+    "price": "$24.99",
+    "description": "Smooth with warm spice flavors.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/captain-morgan.jpg"
+  },
+  {
+    "id": 2011,
+    "title": "Kraken Black Spiced Rum",
+    "price": "$27.99",
+    "description": "Bold and dark spiced rum with deep flavors.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/kraken-rum.jpg"
+  },
+  {
+    "id": 2012,
+    "title": "Sailor Jerry Spiced Rum",
+    "price": "$22.99",
+    "description": "Classic spiced rum with vanilla and cinnamon notes.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/sailor-jerry.jpg"
+  },
+  {
+    "id": 2013,
+    "title": "Malibu Coconut Rum",
+    "price": "$19.99",
+    "description": "Sweet coconut-flavored Caribbean rum.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/malibu-rum.jpg"
+  },
+  {
+    "id": 2014,
+    "title": "Don Papa Small Batch Rum",
+    "price": "$34.99",
+    "description": "Premium aged spiced rum from the Philippines.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/don-papa-rum.jpg"
+  },
+  {
+    "id": 2015,
+    "title": "Pusser's British Navy Spiced Rum",
+    "price": "$28.99",
+    "description": "Authentic British Navy style spiced rum.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/pussers-spiced-rum.jpg"
+  },
+  {
+    "id": 2016,
+    "title": "Bumbu Original Craft Rum",
+    "price": "$39.99",
+    "description": "Smooth and sweet rum with notes of banana and vanilla.",
+    "category": "Rum",
+    "subcategory": "Spiced",
+    "image": "/images/bumbu-rum.jpg"
+  },
+  {
+    "id": 202,
+    "title": "Espolon Blanco Tequila",
+    "price": "$29.99",
+    "description": "Crisp agave flavor, great in cocktails.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/espolon.jpg"
+  },
+  {
+    "id": 2021,
+    "title": "Patrón Silver Tequila",
+    "price": "$48.99",
+    "description": "Ultra-premium tequila, smooth and refined.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/patron-silver.jpg"
+  },
+  {
+    "id": 2022,
+    "title": "Olmeca Altos Plata Tequila",
+    "price": "$26.99",
+    "description": "100% agave tequila, excellent for margaritas.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/olmeca-altos-plata.jpg"
+  },
+  {
+    "id": 2023,
+    "title": "Teremana Blanco Tequila",
+    "price": "$32.99",
+    "description": "Dwayne 'The Rock' Johnson's smooth blanco tequila.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/teremana-blanco.jpg"
+  },
+  {
+    "id": 2024,
+    "title": "Milagro Silver Tequila",
+    "price": "$24.99",
+    "description": "Smooth and crisp, triple-distilled tequila.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/milagro-silver.jpg"
+  },
+  {
+    "id": 2025,
+    "title": "El Tesoro Blanco Tequila",
+    "price": "$42.99",
+    "description": "Authentic, artisanal blanco tequila.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/el-tesoro-blanco.jpg"
+  },
+  {
+    "id": 2026,
+    "title": "Maestro Dobel Diamante Tequila",
+    "price": "$52.99",
+    "description": "Crystal-clear blend of Añejo, Reposado, and Extra-Añejo.",
+    "category": "Tequila & Mezcal",
+    "subcategory": "Blanco",
+    "image": "/images/maestro-dobel-diamante.jpg"
+  },
+  {
+    "id": 203,
+    "title": "Hennessy VS",
+    "price": "$49.99",
+    "description": "World-renowned cognac with deep oak notes.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/hennessy.jpg"
+  },
+  {
+    "id": 2031,
+    "title": "Rémy Martin VSOP",
+    "price": "$59.99",
+    "description": "Fine Champagne Cognac, smooth and harmonious.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/remy-martin-vsop.jpg"
+  },
+  {
+    "id": 2032,
+    "title": "Martell Blue Swift",
+    "price": "$64.99",
+    "description": "VSOP Cognac finished in Bourbon casks.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/martell-blue-swift.jpg"
+  },
+  {
+    "id": 2033,
+    "title": "Courvoisier VS Cognac",
+    "price": "$39.99",
+    "description": "Floral and fruity Cognac, perfect for cocktails.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/courvoisier-vs.jpg"
+  },
+  {
+    "id": 2034,
+    "title": "Camus VSOP Elegance",
+    "price": "$49.99",
+    "description": "Rich and smooth Cognac with fruity aromas.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/camus-vsop.jpg"
+  },
+  {
+    "id": 2035,
+    "title": "D'USSÉ VSOP Cognac",
+    "price": "$54.99",
+    "description": "Bold and smooth Cognac crafted at the Château de Cognac.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/dusse-vsop.jpg"
+  },
+  {
+    "id": 2036,
+    "title": "Louis XIII de Rémy Martin",
+    "price": "$3500.00",
+    "description": "Exceptional Cognac, a blend of up to 1,200 eaux-de-vie.",
+    "category": "Brandy & Cognac",
+    "subcategory": "Cognac",
+    "image": "/images/louis-xiii.jpg"
+  },
+  {
+    "id": 204,
+    "title": "Sho Chiku Bai Junmai",
+    "price": "$11.99",
+    "description": "Classic Japanese sake for sushi nights.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/sake.jpg"
+  },
+  {
+    "id": 2041,
+    "title": "Dassai 23 Junmai Daiginjo",
+    "price": "$69.99",
+    "description": "Highly polished rice sake, aromatic and delicate.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/dassai-23.jpg"
+  },
+  {
+    "id": 2042,
+    "title": "Gekkeikan Sake",
+    "price": "$9.99",
+    "description": "Versatile and widely popular sake.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/gekkeikan-sake.jpg"
+  },
+  {
+    "id": 2043,
+    "title": "Kubota Senju Ginjo",
+    "price": "$29.99",
+    "description": "Smooth and dry, with a clean finish.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/kubota-senju.jpg"
+  },
+  {
+    "id": 2044,
+    "title": "Hakutsuru Junmai Sake",
+    "price": "$14.99",
+    "description": "Well-balanced and easy-drinking junmai.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/hakutsuru-junmai.jpg"
+  },
+  {
+    "id": 2045,
+    "title": "Rihaku Wandering Poet Junmai Ginjo",
+    "price": "$24.99",
+    "description": "Fruity and elegant, a favorite among connoisseurs.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/rihaku-wandering-poet.jpg"
+  },
+  {
+    "id": 2046,
+    "title": "Suigei Tokubetsu Junmai 'Drunken Whale'",
+    "price": "$28.99",
+    "description": "Dry and crisp, perfect with rich foods.",
+    "category": "Sake",
+    "subcategory": "Junmai",
+    "image": "/images/suigei-drunken-whale.jpg"
+  },
+  {
+    "id": 205,
+    "title": "Baileys Irish Cream",
+    "price": "$23.99",
+    "description": "Creamy liqueur made with real Irish whiskey.",
+    "category": "Liqueurs",
+    "subcategory": "Cream",
+    "image": "/images/baileys.jpg"
+  },
+  {
+    "id": 2051,
+    "title": "Kahlúa Coffee Liqueur",
+    "price": "$20.99",
+    "description": "Rich and sweet coffee-flavored liqueur from Mexico.",
+    "category": "Liqueurs",
+    "subcategory": "Coffee",
+    "image": "/images/kahlua.jpg"
+  },
+  {
+    "id": 2052,
+    "title": "Grand Marnier Cordon Rouge",
+    "price": "$39.99",
+    "description": "Orange-flavored liqueur blended with Cognac.",
+    "category": "Liqueurs",
+    "subcategory": "Fruit",
+    "image": "/images/grand-marnier.jpg"
+  },
+  {
+    "id": 2053,
+    "title": "Disaronno Originale Amaretto",
+    "price": "$24.99",
+    "description": "Italian almond-flavored liqueur.",
+    "category": "Liqueurs",
+    "subcategory": "Nutty",
+    "image": "/images/disaronno.jpg"
+  },
+  {
+    "id": 2054,
+    "title": "Jägermeister Herbal Liqueur",
+    "price": "$22.99",
+    "description": "German digestif made with 56 herbs and spices.",
+    "category": "Liqueurs",
+    "subcategory": "Herbal",
+    "image": "/images/jagermeister.jpg"
+  },
+  {
+    "id": 2055,
+    "title": "Midori Melon Liqueur",
+    "price": "$19.99",
+    "description": "Sweet and vibrant green melon liqueur.",
+    "category": "Liqueurs",
+    "subcategory": "Fruit",
+    "image": "/images/midori.jpg"
+  },
+  {
+    "id": 2056,
+    "title": "Chambord Black Raspberry Liqueur",
+    "price": "$29.99",
+    "description": "Rich and elegant French raspberry liqueur.",
+    "category": "Liqueurs",
+    "subcategory": "Fruit",
+    "image": "/images/chambord.jpg"
+  },
+  {
+    "id": 206,
+    "title": "Fever-Tree Tonic Water",
+    "price": "$6.99",
+    "description": "Premium mixer with natural botanicals.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Tonic Water",
+    "image": "/images/fever-tree.jpg"
+  },
+  {
+    "id": 2061,
+    "title": "Seedlip Garden 108",
+    "price": "$32.99",
+    "description": "Non-alcoholic spirit with herbaceous notes.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Mocktails",
+    "image": "/images/seedlip-garden.jpg"
+  },
+  {
+    "id": 2062,
+    "title": "San Pellegrino Sparkling Water",
+    "price": "$4.99",
+    "description": "Italian sparkling natural mineral water.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Soda",
+    "image": "/images/san-pellegrino.jpg"
+  },
+  {
+    "id": 2063,
+    "title": "Angostura Aromatic Bitters",
+    "price": "$12.99",
+    "description": "Concentrated bitters used in cocktails.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Bitters",
+    "image": "/images/angostura-bitters.jpg"
+  },
+  {
+    "id": 2064,
+    "title": "Lyre's Italian Spritz (Non-Alcoholic)",
+    "price": "$28.99",
+    "description": "Non-alcoholic alternative to Aperol.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Mocktails",
+    "image": "/images/lyres-italian-spritz.jpg"
+  },
+  {
+    "id": 2065,
+    "title": "Coca-Cola Classic",
+    "price": "$2.99",
+    "description": "The original refreshing carbonated soft drink.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Soda",
+    "image": "/images/coca-cola.jpg"
+  },
+  {
+    "id": 2066,
+    "title": "Q Mixers Ginger Beer",
+    "price": "$5.99",
+    "description": "Premium ginger beer, perfectly spicy for Moscow Mules.",
+    "category": "Non-Alcoholic Drinks",
+    "subcategory": "Soda",
+    "image": "/images/q-ginger-beer.jpg"
+  }
+]

@@ -67,36 +67,29 @@
 }
 
 /* ===== Glass Text & Subtext ===== */
+.glass-banner {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+}
+
 .glass-text {
   font-size: 3.2rem;
   font-weight: 800;
   letter-spacing: 1px;
-  background: linear-gradient(
-    135deg,
-    rgb(255, 255, 255) 100%,
-    rgb(255, 255, 255) 100%,
-    rgb(255, 255, 255) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+  margin: 0;
 }
 
 .glass-subtext {
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.5px;
-  background: linear-gradient(
-    535deg,
-    rgb(255, 255, 255) 100%,
-    rgb(255, 255, 255) 100%,
-    rgb(255, 255, 255) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
+  color: #ffdc2d;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.85);
+  margin: 0;
 }

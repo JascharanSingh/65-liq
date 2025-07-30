@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Whiskey",
+    "subcategories": ["All", "Canadian", "Flavored", "American", "Irish", "Bourbon", "Single Malt", "More Whiskey", "Scotch", "Rye"]
+  },
+  {
+    "name": "Vodka",
+    "subcategories": ["All", "Plain", "Flavored", "Premium"]
+  },
+  {
+    "name": "Wine",
+    "subcategories": ["All", "Red", "White", "Rosé", "Sparkling", "Dessert"]
+  },
+  {
+    "name": "Rum",
+    "subcategories": ["All", "White", "Dark", "Spiced", "Overproof"]
+  },
+  {
+    "name": "Tequila & Mezcal",
+    "subcategories": ["All", "Blanco", "Reposado", "Añejo", "Joven"]
+  },
+  {
+    "name": "Brandy & Cognac",
+    "subcategories": ["All", "Cognac", "Brandy", "VSOP", "XO"]
+  },
+  {
+    "name": "Sake",
+    "subcategories": ["All", "Junmai", "Ginjo", "Nigori", "Honjozo"]
+  },
+  {
+    "name": "Liqueurs",
+    "subcategories": ["All", "Fruit", "Nutty", "Coffee", "Cream"]
+  },
+  {
+    "name": "Non-Alcoholic Drinks",
+    "subcategories": ["All", "Mocktails", "Soda", "Tonic Water", "Bitters"]
+  }
+]
