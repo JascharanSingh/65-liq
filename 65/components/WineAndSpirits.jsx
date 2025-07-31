@@ -19,10 +19,7 @@ const WineAndSpirits = () => {
   useEffect(() => {
     setLoading(true);
     fetch("http://localhost:4000/api/products")
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         setShopProducts(data);
         setError(null);
@@ -39,10 +36,7 @@ const WineAndSpirits = () => {
     if (selectedCategory !== 'Shop') {
       setLoading(true);
       fetch(`http://localhost:4000/api/products/category/${selectedCategory}`)
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
           setCategoryProducts(data);
           setError(null);
@@ -56,38 +50,25 @@ const WineAndSpirits = () => {
     }
   }, [selectedCategory]);
 
-  const SectionHeader = ({ title, subtitle }) => (
-    <div className="mb-4">
-      <h4 
-        className="mb-1" 
+  const SectionHeader = ({ title }) => (
+    <div className="mb-4 d-flex align-items-center justify-content-between">
+      <h4
+        className="mb-0"
         style={{
           fontFamily: 'Playfair Display, serif',
           fontWeight: '600',
           fontSize: '1.5rem',
           color: '#1F2937',
-          letterSpacing: '-0.025em'
         }}
       >
         {title}
       </h4>
-      {subtitle && (
-        <p 
-          className="text-muted mb-0"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '0.95rem',
-            color: '#6B7280'
-          }}
-        >
-          {subtitle}
-        </p>
-      )}
     </div>
   );
 
   const LoadingSpinner = () => (
     <div className="d-flex justify-content-center align-items-center py-5">
-      <div 
+      <div
         className="spinner-border"
         style={{ color: '#E97451', width: '2.5rem', height: '2.5rem' }}
         role="status"
@@ -98,7 +79,7 @@ const WineAndSpirits = () => {
   );
 
   const ErrorAlert = ({ message }) => (
-    <div 
+    <div
       className="alert d-flex align-items-center justify-content-center text-center mb-4"
       style={{
         backgroundColor: '#FEF2F2',
@@ -114,7 +95,7 @@ const WineAndSpirits = () => {
     </div>
   );
 
-  const getFilteredProducts = (products, filterFn, fallbackMessage = 'No products found') => {
+  const getFilteredProducts = (products, filterFn) => {
     const filtered = products.filter(filterFn);
     return filtered.length > 0 ? filtered : [];
   };
@@ -123,19 +104,18 @@ const WineAndSpirits = () => {
     <section id="shop-section" className="section py-5">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 
+          <h2
             className="section-title mb-3"
             style={{
               fontFamily: 'Playfair Display, serif',
               fontSize: '2.5rem',
               fontWeight: '600',
-              color: '#1F2937',
-              letterSpacing: '-0.025em'
+              color: '#1F2937'
             }}
           >
             Wine & Spirits
           </h2>
-          <p 
+          <p
             className="lead text-muted"
             style={{
               fontFamily: 'Inter, sans-serif',
@@ -153,7 +133,7 @@ const WineAndSpirits = () => {
 
         <div className="row">
           <div className="col-md-3 mb-4 pe-4">
-            <div 
+            <div
               style={{
                 position: 'sticky',
                 top: '20px',
@@ -164,7 +144,7 @@ const WineAndSpirits = () => {
                 border: '1px solid rgba(229, 231, 235, 0.5)'
               }}
             >
-              <h5 
+              <h5
                 className="mb-3"
                 style={{
                   fontFamily: 'Inter, sans-serif',
@@ -192,70 +172,52 @@ const WineAndSpirits = () => {
               <div className="shop-sections">
                 {/* Best Sellers Section */}
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="Best Sellers" 
-                    subtitle="Our most popular products loved by customers"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.bestSeller)} 
+                  <SectionHeader title="Best Sellers" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.bestSeller)}
                     isShopView={true}
                   />
                 </div>
 
                 {/* On Sale Section */}
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="On Sale" 
-                    subtitle="Limited time offers and special deals"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.onSale)} 
+                  <SectionHeader title="On Sale" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.onSale)}
                     isShopView={true}
                   />
                 </div>
 
                 {/* New Arrivals Section */}
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="New Arrivals" 
-                    subtitle="Fresh additions to our collection"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.newArrival)} 
+                  <SectionHeader title="New Arrivals" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.newArrival)}
                     isShopView={true}
                   />
                 </div>
 
-                {/* Category Sections */}
+                {/* Category Sections (e.g. Whiskey, Wine, Vodka) */}
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="Whiskey" 
-                    subtitle="Premium whiskeys from around the world"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'whiskey')} 
+                  <SectionHeader title="Whiskey" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'whiskey')}
                     isShopView={true}
                   />
                 </div>
 
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="Vodka" 
-                    subtitle="Pure and smooth vodka selections"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'vodka')} 
+                  <SectionHeader title="Vodka" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'vodka')}
                     isShopView={true}
                   />
                 </div>
 
                 <div className="mb-5">
-                  <SectionHeader 
-                    title="Wine" 
-                    subtitle="Carefully selected wines for every occasion"
-                  />
-                  <ProductGrid 
-                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'wine')} 
+                  <SectionHeader title="Wine" />
+                  <ProductGrid
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'wine')}
                     isShopView={true}
                   />
                 </div>
@@ -264,20 +226,19 @@ const WineAndSpirits = () => {
               <div className="category-view">
                 <div className="mb-4">
                   <div className="d-flex align-items-center mb-3">
-                    <h4 
+                    <h4
                       className="mb-0 me-3"
                       style={{
                         fontFamily: 'Playfair Display, serif',
                         fontWeight: '600',
                         fontSize: '1.75rem',
-                        color: '#1F2937',
-                        letterSpacing: '-0.025em'
+                        color: '#1F2937'
                       }}
                     >
                       {selectedCategory}
                     </h4>
                     {selectedSubcategory && selectedSubcategory !== 'All' && (
-                      <span 
+                      <span
                         className="badge"
                         style={{
                           backgroundColor: '#E97451',
@@ -293,7 +254,7 @@ const WineAndSpirits = () => {
                       </span>
                     )}
                   </div>
-                  <div 
+                  <div
                     className="mb-4"
                     style={{
                       height: '2px',
@@ -303,13 +264,32 @@ const WineAndSpirits = () => {
                   />
                 </div>
 
-                <ProductGrid
-                  products={categoryProducts.filter(p =>
-                    selectedSubcategory === 'All' ||
-                    p.subcategory?.toLowerCase().trim() === selectedSubcategory.toLowerCase().trim()
-                  )}
-                  isShopView={false}
-                />
+                {selectedSubcategory === 'All' ? (
+                  <>
+                    {Array.from(new Set(categoryProducts.map(p => p.subcategory?.trim() || 'Uncategorized')))
+                      .filter(Boolean)
+                      .sort()
+                      .map((subcat) => {
+                        const label = subcat === 'Uncategorized' ? 'Other' : subcat;
+                        const productsInSub = categoryProducts.filter(
+                          p => (p.subcategory?.trim() || 'Uncategorized') === subcat
+                        );
+                        return (
+                          <div key={subcat} className="mb-5">
+                            <SectionHeader title={label} />
+                            <ProductGrid products={productsInSub} isShopView={true} />
+                          </div>
+                        );
+                      })}
+                  </>
+                ) : (
+                  <ProductGrid
+                    products={categoryProducts.filter(p =>
+                      p.subcategory?.toLowerCase().trim() === selectedSubcategory.toLowerCase().trim()
+                    )}
+                    isShopView={false}
+                  />
+                )}
               </div>
             )}
           </div>

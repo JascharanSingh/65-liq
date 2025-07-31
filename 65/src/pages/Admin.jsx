@@ -1,4 +1,4 @@
-// ✅ Admin.jsx (Enhanced Grid Layout)
+// ✅ Admin.jsx (Enhanced Grid Layout with Subcategory Support)
 import React, { useEffect, useState } from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
 
@@ -133,10 +133,29 @@ export default function Admin() {
         <input type="text" placeholder="Volume" value={formData.volume} onChange={(e) => setFormData({ ...formData, volume: e.target.value })} className="border p-2 rounded" />
         <input type="text" placeholder="Selling Price" value={formData.sellingPrice} onChange={(e) => setFormData({ ...formData, sellingPrice: e.target.value })} className="border p-2 rounded" />
         <input type="text" placeholder="Brand" value={formData.brand} onChange={(e) => setFormData({ ...formData, brand: e.target.value })} className="border p-2 rounded" />
-        <select value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="border p-2 rounded">
+        <select
+          value={formData.category}
+          onChange={(e) =>
+            setFormData({ ...formData, category: e.target.value, subcategory: "" })
+          }
+          className="border p-2 rounded"
+        >
           <option value="">Select Category</option>
           {Object.keys(categoryMap).map((cat) => <option key={cat} value={cat}>{cat}</option>)}
         </select>
+
+        {categoryMap[formData.category]?.length > 0 && (
+          <select
+            value={formData.subcategory}
+            onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+            className="border p-2 rounded"
+          >
+            <option value="">Select Subcategory</option>
+            {categoryMap[formData.category].map((sub) => (
+              <option key={sub} value={sub}>{sub}</option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-4 mt-4">
@@ -171,6 +190,7 @@ export default function Admin() {
             <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded" />
             <h4 className="font-semibold mt-2 text-base">{product.name}</h4>
             <p className="text-green-700 font-bold text-sm">${product.price}</p>
+            <p className="text-xs text-gray-600">{product.category}{product.subcategory ? ` → ${product.subcategory}` : ""}</p>
             <p className="text-xs text-gray-500 line-clamp-2">{product.description}</p>
             <div className="flex justify-between mt-3">
               <button className="bg-blue-600 text-white px-3 py-1 rounded text-sm" onClick={() => {
