@@ -5,30 +5,31 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WineAndSpirits from "../components/WineAndSpirits";
 import Admin from "./pages/Admin";
+import { CartProvider } from "../context/CartContext";
+import CartSidebar from "../components/products-bottles/CartSidebar"; // ✅ fixed path
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Admin route without layout */}
-        <Route path="/admin" element={<Admin />} />
-
-        {/* All public routes wrapped with Header + Footer */}
-        <Route
-          path="*"
-          element={
-            <div className="d-flex flex-column min-vh-100">
-              <div className="flex-grow-1">
-                <Header />
-                
-                <WineAndSpirits />
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="*"
+            element={
+              <div className="d-flex flex-column min-vh-100">
+                <div className="flex-grow-1 position-relative">
+                  <Header />
+                  <WineAndSpirits />
+                  <CartSidebar /> {/* ✅ works now */}
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-          }
-        />
-      </Routes>
-    </Router>
+            }
+          />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 

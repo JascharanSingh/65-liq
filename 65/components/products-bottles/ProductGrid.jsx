@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
+import { useCart } from '../../context/CartContext';
 
 const ProductGrid = ({ products = [], isShopView = false }) => {
   const scrollRef = useRef(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [showCart, setShowCart] = useState(false);
+  const { addToCart } = useCart();
 
   const scroll = (direction) => {
     const container = scrollRef.current;
@@ -19,63 +19,11 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
   };
 
   const handleAddToCart = () => {
-    const existing = cartItems.find(
-      (item) => item._id === selectedProduct._id && item.volume === selectedProduct.volume
-    );
-
-    if (existing) {
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item._id === existing._id && item.volume === existing.volume
-            ? { ...item, qty: item.qty + quantity }
-            : item
-        )
-      );
-    } else {
-      setCartItems((prev) => [...prev, { ...selectedProduct, qty: quantity }]);
-    }
-
+    addToCart(selectedProduct, quantity);
     setSelectedProduct(null);
     setQuantity(1);
     setShowFullDescription(false);
-    setShowCart(true);
   };
-
-  const CartSidebar = () => (
-    <div
-      className={`cart-sidebar position-fixed top-0 end-0 h-100 bg-white shadow-lg p-4 transition-all`}
-      style={{ width: '50vw', transform: showCart ? 'translateX(0)' : 'translateX(100%)', zIndex: 1050 }}
-    >
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5>Your Cart</h5>
-        <button className="btn-close" onClick={() => setShowCart(false)} />
-      </div>
-      {cartItems.length === 0 ? (
-        <p className="text-muted">Your cart is empty.</p>
-      ) : (
-        <div className="d-flex flex-column gap-3">
-          {cartItems.map((item, idx) => (
-            <div key={idx} className="d-flex align-items-center gap-3 border-bottom pb-2">
-              <img src={item.image} alt={item.name} style={{ width: 60, height: 60, objectFit: 'contain' }} />
-              <div className="flex-grow-1">
-                <div className="fw-bold small">{item.brand} {item.volume}</div>
-                <div className="small">{item.name}</div>
-                <div className="small text-muted">{item.qty} x ${item.price}</div>
-              </div>
-              <div className="fw-bold">${(item.qty * item.price).toFixed(2)}</div>
-            </div>
-          ))}
-          <hr />
-          <div className="d-flex justify-content-between fw-bold">
-            <div>Total:</div>
-            <div>
-              ${cartItems.reduce((total, item) => total + item.qty * item.price, 0).toFixed(2)}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
 
   const ProductModal = () => {
     if (!selectedProduct) return null;
@@ -164,7 +112,6 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
   return (
     <>
       <ProductModal />
-      <CartSidebar />
       <div className="row g-4">
         {products.map((product) => (
           <div key={product._id} className="col-6 col-md-4 col-lg-3">

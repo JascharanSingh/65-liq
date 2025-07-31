@@ -1,8 +1,16 @@
 import React from "react";
 import { FaShoppingCart, FaStore } from "react-icons/fa";
+import { useCart } from "../context/CartContext";
 import "./Header.css";
 
 const Header = () => {
+  const { cartItems, setShowCart } = useCart();
+  const cartCount = cartItems.reduce((total, item) => total + item.qty, 0);
+
+  const handleCartClick = () => {
+    setShowCart(true); // Ensure this opens the cart sidebar
+  };
+
   return (
     <header className="position-relative vh-100 overflow-hidden">
       {/* Fullscreen Background */}
@@ -57,21 +65,42 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Cart Icon */}
-        <FaShoppingCart className="text-white" size={18} />
+        {/* Cart Icon with Badge */}
+        <div
+          className="position-relative"
+          style={{ cursor: "pointer" }}
+          onClick={handleCartClick}
+        >
+          <FaShoppingCart className="text-white" size={20} />
+          {cartCount > 0 && (
+            <span
+              className="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+              style={{
+                backgroundColor: "#E97451",
+                fontSize: "0.7rem",
+                padding: "0.3rem 0.5rem",
+              }}
+            >
+              {cartCount}
+            </span>
+          )}
+        </div>
       </div>
 
-{/* Shop Now Section with Glass Text */}
-
-<div className="position-absolute top-50 start-50 translate-middle text-center">
-  <div className="d-flex flex-column align-items-center gap-3">
-    <div className="glass-banner text-center p-4 px-5">
-      <h1 className="glass-text mb-2">Premium Collection</h1>
-      <p className="glass-subtext mb-0">Finest Spirits Handpicked for Connoisseurs</p>
-    </div>
-    <a href="#shop-section" className="shop-now-btn">Shop Now</a>
-  </div>
-</div>
+      {/* Shop Now Section */}
+      <div className="position-absolute top-50 start-50 translate-middle text-center">
+        <div className="d-flex flex-column align-items-center gap-3">
+          <div className="glass-banner text-center p-4 px-5">
+            <h1 className="glass-text mb-2">Premium Collection</h1>
+            <p className="glass-subtext mb-0">
+              Finest Spirits Handpicked for Connoisseurs
+            </p>
+          </div>
+          <a href="#shop-section" className="shop-now-btn">
+            Shop Now
+          </a>
+        </div>
+      </div>
     </header>
   );
 };
