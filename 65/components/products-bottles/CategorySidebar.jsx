@@ -5,10 +5,39 @@ const CategorySidebar = ({ onSelect, selectedCategory, selectedSubcategory }) =>
   const [expandedCategory, setExpandedCategory] = useState(null);
 
   useEffect(() => {
-    fetch('/data/categories.json')
+    fetch("http://localhost:4000/api/products/categories")
       .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error('Failed to load categories:', err));
+      .then((data) => {
+        // Ensure 'All' is the first subcategory for each category
+        const formatted = data.map(cat => {
+          const sub = cat.subcategories || [];
+          const unique = [...new Set(sub.filter(Boolean))];
+          if (!unique.includes("All")) unique.unshift("All");
+
+          return {
+            name: cat.name,
+            subcategories: unique.sort((a, b) => {
+              if (a === "All") return -1;
+              if (b === "All") return 1;
+              return a.localeCompare(b);
+            }),
+          };
+        });
+
+        // Custom ordering for priority categories
+        const priorityOrder = ["Whiskey", "Vodka", "Tequila"];
+        const sorted = [
+          ...priorityOrder
+            .map(p => formatted.find(cat => cat.name.toLowerCase() === p.toLowerCase()))
+            .filter(Boolean),
+          ...formatted
+            .filter(cat => !priorityOrder.includes(cat.name))
+            .sort((a, b) => a.name.localeCompare(b.name)),
+        ];
+
+        setCategories(sorted);
+      })
+      .catch((err) => console.error("❌ Failed to fetch categories:", err));
   }, []);
 
   const handleCategoryClick = (category) => {
@@ -22,67 +51,120 @@ const CategorySidebar = ({ onSelect, selectedCategory, selectedSubcategory }) =>
 
   return (
     <div className="category-sidebar">
-      {/* SHOP Button */}
+      {/* Shop Option */}
       <div
         onClick={() => {
           setExpandedCategory(null);
           onSelect('Shop', '');
         }}
+        className="mb-1"
         style={{
           cursor: 'pointer',
-          fontWeight: selectedCategory === 'Shop' ? 'bold' : 'normal',
+          fontWeight: selectedCategory === 'Shop' ? '600' : '500',
           fontSize: '1.1rem',
           fontFamily: 'Inter, sans-serif',
-          color: selectedCategory === 'Shop' ? '#e0633e' : '#333',
-          marginBottom: '1rem',
+          color: selectedCategory === 'Shop' ? '#E97451' : '#374151',
+          padding: '0.75rem 0',
+          borderBottom: selectedCategory === 'Shop' ? '2px solid #E97451' : '2px solid transparent',
+          transition: 'all 0.2s ease',
+          borderRadius: '4px 4px 0 0'
+        }}
+        onMouseEnter={(e) => {
+          if (selectedCategory !== 'Shop') {
+            e.target.style.color = '#E97451';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (selectedCategory !== 'Shop') {
+            e.target.style.color = '#374151';
+          }
         }}
       >
         Shop
       </div>
 
-      {/* Category List */}
+      {/* Dynamic Categories */}
       {categories.map((cat) => (
-        <div key={cat.name} className="category mb-3">
-          <h5
-            className="category-title"
+        <div key={cat.name} className="mb-1">
+          <div
             onClick={() => handleCategoryClick(cat.name)}
+            className="d-flex align-items-center justify-content-between"
             style={{
               cursor: 'pointer',
-              fontWeight: selectedCategory === cat.name ? 'bold' : 'normal',
+              fontWeight: selectedCategory === cat.name ? '600' : '500',
               fontSize: '1.1rem',
               fontFamily: 'Inter, sans-serif',
-              color: selectedCategory === cat.name ? '#e0633e' : '#333',
-              marginBottom: '0.5rem',
+              color: selectedCategory === cat.name ? '#E97451' : '#374151',
+              padding: '0.75rem 0',
+              borderBottom: selectedCategory === cat.name ? '2px solid #E97451' : '2px solid transparent',
+              transition: 'all 0.2s ease',
+              borderRadius: '4px 4px 0 0'
+            }}
+            onMouseEnter={(e) => {
+              if (selectedCategory !== cat.name) {
+                e.target.style.color = '#E97451';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedCategory !== cat.name) {
+                e.target.style.color = '#374151';
+              }
             }}
           >
-            {cat.name}
-          </h5>
+            <span>{cat.name}</span>
+            {cat.subcategories.length > 1 && (
+              <span 
+                style={{ 
+                  fontSize: '0.8rem',
+                  transform: expandedCategory === cat.name ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s ease',
+                  color: 'inherit',
+                  opacity: 0.6
+                }}
+              >
+                ▼
+              </span>
+            )}
+          </div>
 
-          {expandedCategory === cat.name && (
-            <ul className="subcategory-list ps-3">
+          {expandedCategory === cat.name && cat.subcategories.length > 1 && (
+            <div 
+              className="pb-2"
+              style={{
+                borderLeft: '1px solid #F3F4F6',
+                marginLeft: '0.5rem',
+                paddingLeft: '1rem'
+              }}
+            >
               {cat.subcategories.map((sub) => (
-                <li
+                <div
                   key={sub}
-                  className="subcategory-link"
                   onClick={() => onSelect(cat.name, sub)}
                   style={{
                     cursor: 'pointer',
                     fontSize: '0.95rem',
-                    color:
-                      selectedCategory === cat.name && selectedSubcategory === sub
-                        ? '#e0633e'
-                        : '#666',
-                    fontWeight:
-                      selectedCategory === cat.name && selectedSubcategory === sub
-                        ? 'bold'
-                        : 'normal',
-                    marginBottom: '0.25rem',
+                    fontFamily: 'Inter, sans-serif',
+                    color: selectedSubcategory === sub ? '#E97451' : '#6B7280',
+                    fontWeight: selectedSubcategory === sub ? '500' : '400',
+                    padding: '0.5rem 0',
+                    transition: 'color 0.2s ease',
+                    lineHeight: '1.2'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedSubcategory !== sub) {
+                      e.target.style.color = '#374151';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedSubcategory !== sub) {
+                      e.target.style.color = '#6B7280';
+                    }
                   }}
                 >
                   {sub}
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
       ))}

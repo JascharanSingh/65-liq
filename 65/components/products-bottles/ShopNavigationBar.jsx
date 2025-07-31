@@ -1,7 +1,7 @@
 // src/pages/ShopNavigationBar.jsx
 import React from 'react';
 
-const ShopNavigationBar = ({ onNavigate }) => {
+const ShopNavigationBar = ({ onNavigate, activeSection = 'Shop' }) => {
   const sections = ['Shop', 'Best Sellers', 'Trending', 'On Sale', 'New Arrivals'];
 
   return (
@@ -9,11 +9,13 @@ const ShopNavigationBar = ({ onNavigate }) => {
       {sections.map((section) => (
         <button
           key={section}
-          className="text-start btn btn-light border-bottom py-2 px-3 text-dark fw-semibold"
+          className={`text-start btn border-bottom py-2 px-3 fw-semibold ${
+            activeSection === section ? 'bg-light text-dark' : 'bg-transparent text-secondary'
+          }`}
           onClick={() => onNavigate(section)}
-          style={{ background: section === 'Shop' ? '#eee' : 'transparent' }}
         >
-          <i className="bi bi-shop me-2"></i> {section}
+          {section === 'Shop' && <i className="bi bi-shop me-2"></i>}
+          {section}
         </button>
       ))}
     </div>

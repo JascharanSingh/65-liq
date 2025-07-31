@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CategorySidebar from './products-bottles/CategorySidebar';
 import ProductGrid from './products-bottles/ProductGrid';
 import './WineAndSpirits.css';
@@ -6,70 +6,311 @@ import './WineAndSpirits.css';
 const WineAndSpirits = () => {
   const [selectedCategory, setSelectedCategory] = useState('Shop');
   const [selectedSubcategory, setSelectedSubcategory] = useState('All');
+  const [shopProducts, setShopProducts] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSelect = (category, subcategory = 'All') => {
     setSelectedCategory(category);
     setSelectedSubcategory(subcategory);
   };
 
+  useEffect(() => {
+    setLoading(true);
+    fetch("http://localhost:4000/api/products")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setShopProducts(data);
+        setError(null);
+      })
+      .catch(() => {
+        setError("Failed to load product data. Check API or server.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory !== 'Shop') {
+      setLoading(true);
+      fetch(`http://localhost:4000/api/products/category/${selectedCategory}`)
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then((data) => {
+          setCategoryProducts(data);
+          setError(null);
+        })
+        .catch(() => {
+          setError(`Could not load ${selectedCategory} products.`);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [selectedCategory]);
+
+  const SectionHeader = ({ title, subtitle }) => (
+    <div className="mb-4">
+      <h4 
+        className="mb-1" 
+        style={{
+          fontFamily: 'Playfair Display, serif',
+          fontWeight: '600',
+          fontSize: '1.5rem',
+          color: '#1F2937',
+          letterSpacing: '-0.025em'
+        }}
+      >
+        {title}
+      </h4>
+      {subtitle && (
+        <p 
+          className="text-muted mb-0"
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '0.95rem',
+            color: '#6B7280'
+          }}
+        >
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+
+  const LoadingSpinner = () => (
+    <div className="d-flex justify-content-center align-items-center py-5">
+      <div 
+        className="spinner-border"
+        style={{ color: '#E97451', width: '2.5rem', height: '2.5rem' }}
+        role="status"
+      >
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+
+  const ErrorAlert = ({ message }) => (
+    <div 
+      className="alert d-flex align-items-center justify-content-center text-center mb-4"
+      style={{
+        backgroundColor: '#FEF2F2',
+        border: '1px solid #FECACA',
+        borderRadius: '12px',
+        color: '#DC2626',
+        fontFamily: 'Inter, sans-serif',
+        fontWeight: '500'
+      }}
+    >
+      <span className="me-2" style={{ fontSize: '1.2rem' }}>⚠️</span>
+      {message}
+    </div>
+  );
+
+  const getFilteredProducts = (products, filterFn, fallbackMessage = 'No products found') => {
+    const filtered = products.filter(filterFn);
+    return filtered.length > 0 ? filtered : [];
+  };
+
   return (
     <section id="shop-section" className="section py-5">
       <div className="container">
-        <h2 className="section-title mb-5 text-center">Wine & Spirits</h2>
+        <div className="text-center mb-5">
+          <h2 
+            className="section-title mb-3"
+            style={{
+              fontFamily: 'Playfair Display, serif',
+              fontSize: '2.5rem',
+              fontWeight: '600',
+              color: '#1F2937',
+              letterSpacing: '-0.025em'
+            }}
+          >
+            Wine & Spirits
+          </h2>
+          <p 
+            className="lead text-muted"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '1.1rem',
+              color: '#6B7280',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}
+          >
+            Discover our curated collection of premium wines and spirits
+          </p>
+        </div>
+
+        {error && <ErrorAlert message={error} />}
 
         <div className="row">
-          {/* Sidebar */}
-          <div className="col-md-3 mb-4">
-            <CategorySidebar
-              onSelect={handleSelect}
-              selectedCategory={selectedCategory}
-              selectedSubcategory={selectedSubcategory}
-            />
+          <div className="col-md-3 mb-4 pe-4">
+            <div 
+              style={{
+                position: 'sticky',
+                top: '20px',
+                backgroundColor: '#ffffff',
+                borderRadius: '16px',
+                padding: '1.5rem',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(229, 231, 235, 0.5)'
+              }}
+            >
+              <h5 
+                className="mb-3"
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '1.1rem',
+                  fontWeight: '600',
+                  color: '#374151',
+                  borderBottom: '2px solid #F3F4F6',
+                  paddingBottom: '0.5rem'
+                }}
+              >
+                Categories
+              </h5>
+              <CategorySidebar
+                onSelect={handleSelect}
+                selectedCategory={selectedCategory}
+                selectedSubcategory={selectedSubcategory}
+              />
+            </div>
           </div>
 
-          {/* Product Display */}
-          <div className="col-md-9">
-            {selectedCategory === 'Shop' ? (
-              <>
-                {/* Best Sellers */}
-                <h4 className="mb-3">Best Sellers</h4>
-                <ProductGrid selectedCategory="Shop" selectedSubcategory="Best Sellers" />
+          <div className="col-md-9 ps-4">
+            {loading ? (
+              <LoadingSpinner />
+            ) : selectedCategory === 'Shop' ? (
+              <div className="shop-sections">
+                {/* Best Sellers Section */}
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="Best Sellers" 
+                    subtitle="Our most popular products loved by customers"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.bestSeller)} 
+                    isShopView={true}
+                  />
+                </div>
 
-                {/* Trending */}
-                <h4 className="mt-5 mb-3">Trending</h4>
-                <ProductGrid selectedCategory="Shop" selectedSubcategory="Trending" />
+                {/* On Sale Section */}
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="On Sale" 
+                    subtitle="Limited time offers and special deals"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.onSale)} 
+                    isShopView={true}
+                  />
+                </div>
 
-                {/* On Sale */}
-                <h4 className="mt-5 mb-3">On Sale</h4>
-                <ProductGrid selectedCategory="Shop" selectedSubcategory="On Sale" />
+                {/* New Arrivals Section */}
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="New Arrivals" 
+                    subtitle="Fresh additions to our collection"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.newArrival)} 
+                    isShopView={true}
+                  />
+                </div>
 
-                {/* New Arrivals */}
-                <h4 className="mt-5 mb-3">New Arrivals</h4>
-                <ProductGrid selectedCategory="Shop" selectedSubcategory="New Arrivals" />
+                {/* Category Sections */}
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="Whiskey" 
+                    subtitle="Premium whiskeys from around the world"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'whiskey')} 
+                    isShopView={true}
+                  />
+                </div>
 
-                {/* Featured Categories */}
-                <h4 className="mt-5 mb-3">Whiskey</h4>
-                <ProductGrid selectedCategory="Whiskey" selectedSubcategory="All" />
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="Vodka" 
+                    subtitle="Pure and smooth vodka selections"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'vodka')} 
+                    isShopView={true}
+                  />
+                </div>
 
-                <h4 className="mt-5 mb-3">Vodka</h4>
-                <ProductGrid selectedCategory="Vodka" selectedSubcategory="All" />
-
-                <h4 className="mt-5 mb-3">Wine</h4>
-                <ProductGrid selectedCategory="Wine" selectedSubcategory="All" />
-              </>
+                <div className="mb-5">
+                  <SectionHeader 
+                    title="Wine" 
+                    subtitle="Carefully selected wines for every occasion"
+                  />
+                  <ProductGrid 
+                    products={getFilteredProducts(shopProducts, p => p.category?.toLowerCase() === 'wine')} 
+                    isShopView={true}
+                  />
+                </div>
+              </div>
             ) : (
-              <>
-                <h4 className="mb-4">
-                  {selectedCategory}
-                  {selectedSubcategory && selectedSubcategory !== 'All'
-                    ? ` — ${selectedSubcategory}`
-                    : ''}
-                </h4>
+              <div className="category-view">
+                <div className="mb-4">
+                  <div className="d-flex align-items-center mb-3">
+                    <h4 
+                      className="mb-0 me-3"
+                      style={{
+                        fontFamily: 'Playfair Display, serif',
+                        fontWeight: '600',
+                        fontSize: '1.75rem',
+                        color: '#1F2937',
+                        letterSpacing: '-0.025em'
+                      }}
+                    >
+                      {selectedCategory}
+                    </h4>
+                    {selectedSubcategory && selectedSubcategory !== 'All' && (
+                      <span 
+                        className="badge"
+                        style={{
+                          backgroundColor: '#E97451',
+                          color: '#ffffff',
+                          fontSize: '0.85rem',
+                          fontWeight: '500',
+                          padding: '0.5rem 1rem',
+                          borderRadius: '20px',
+                          fontFamily: 'Inter, sans-serif'
+                        }}
+                      >
+                        {selectedSubcategory}
+                      </span>
+                    )}
+                  </div>
+                  <div 
+                    className="mb-4"
+                    style={{
+                      height: '2px',
+                      background: 'linear-gradient(90deg, #E97451 0%, rgba(233, 116, 81, 0.1) 100%)',
+                      borderRadius: '1px'
+                    }}
+                  />
+                </div>
+
                 <ProductGrid
-                  selectedCategory={selectedCategory}
-                  selectedSubcategory={selectedSubcategory}
+                  products={categoryProducts.filter(p =>
+                    selectedSubcategory === 'All' ||
+                    p.subcategory?.toLowerCase().trim() === selectedSubcategory.toLowerCase().trim()
+                  )}
+                  isShopView={false}
                 />
-              </>
+              </div>
             )}
           </div>
         </div>
