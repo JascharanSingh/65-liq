@@ -16,6 +16,9 @@ const ProductSchema = new mongoose.Schema({
   brand: { type: String, trim: true },
   image: { type: String, trim: true },
   onSale: { type: Boolean, default: false },
+  bestSeller: { type: Boolean, default: false }, 
+  trending: { type: Boolean, default: false }, 
+  newArrival: { type: Boolean, default: false }, 
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
