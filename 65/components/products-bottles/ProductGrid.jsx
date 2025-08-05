@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ProductGrid = ({ products = [], isShopView = false }) => {
   const scrollRef = useRef(null);
@@ -11,8 +12,9 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
   const scroll = (direction) => {
     const container = scrollRef.current;
     if (container) {
+      const amount = container.offsetWidth * 0.85;
       container.scrollBy({
-        left: direction === 'right' ? 300 : -300,
+        left: direction === 'right' ? amount : -amount,
         behavior: 'smooth',
       });
     }
@@ -85,26 +87,62 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
   const renderCard = (product) => (
     <div
       key={product._id}
-      className="card border-0 text-center position-relative overflow-hidden"
+      className="scroll-snap-item"
       style={{
-        borderRadius: '16px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        cursor: 'pointer'
+        width: '220px',
+        flex: '0 0 auto',
+        scrollSnapAlign: 'start',
       }}
-      onClick={() => setSelectedProduct(product)}
     >
-      <img
-        src={product.image || 'https://placehold.co/180x220/F3F4F6/9CA3AF?text=No+Image'}
-        alt={product.name}
-        className="card-img-top"
-        style={{ height: '180px', objectFit: 'contain', backgroundColor: '#F9FAFB' }}
-      />
-      <div className="card-body p-3">
-        <div style={{ fontWeight: 'bold' }}>{product.brand} {product.volume}</div>
-        <div>{product.name}</div>
-        <div className="small mt-2" style={{ color: '#E97451' }}>${product.price}</div>
+      <div
+        className="card border-0 text-center d-flex flex-column justify-content-between h-100"
+        style={{
+          borderRadius: '16px',
+          backgroundColor: '#ffffff',
+          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+          cursor: 'pointer',
+        }}
+        onClick={() => setSelectedProduct(product)}
+      >
+        <img
+          src={product.image || 'https://placehold.co/180x220/F3F4F6/9CA3AF?text=No+Image'}
+          alt={product.name}
+          className="card-img-top"
+          style={{ height: '180px', objectFit: 'contain', backgroundColor: '#F9FAFB' }}
+        />
+        <div className="card-body p-3 d-flex flex-column justify-content-between">
+          <div style={{ fontWeight: 'bold' }}>{product.brand} {product.volume}</div>
+          <div>{product.name}</div>
+          <div className="d-flex align-items-center justify-content-between mt-2">
+            <div className="small fw-semibold" style={{ color: '#E97451' }}>
+              ${product.price}
+            </div>
+            <button
+              className="btn btn-sm px-2 py-1"
+              style={{
+                fontSize: '0.8rem',
+                border: '1px solid #E97451',
+                color: '#E97451',
+                backgroundColor: 'transparent',
+                transition: 'all 0.2s ease-in-out',
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product, 1);
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#E97451';
+                e.target.style.color = '#fff';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.color = '#E97451';
+              }}
+            >
+              ➕
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -112,12 +150,19 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
   return (
     <>
       <ProductModal />
-      <div className="row g-4">
-        {products.map((product) => (
-          <div key={product._id} className="col-6 col-md-4 col-lg-3">
-            {renderCard(product)}
-          </div>
-        ))}
+      <div className="scroll-wrapper position-relative">
+        <button className="btn-scroll left" onClick={() => scroll('left')}>
+          <FaChevronLeft />
+        </button>
+        <button className="btn-scroll right" onClick={() => scroll('right')}>
+          <FaChevronRight />
+        </button>
+        <div
+          className="d-flex gap-3 overflow-auto product-row"
+          ref={scrollRef}
+        >
+          {products.map(renderCard)}
+        </div>
       </div>
     </>
   );

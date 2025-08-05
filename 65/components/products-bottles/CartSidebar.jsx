@@ -2,13 +2,15 @@ import React from "react";
 import { useCart } from "../../context/CartContext";
 
 const CartSidebar = () => {
-  const { cartItems, showCart, setShowCart, setCartItems } = useCart();
-
-  const total = cartItems.reduce((sum, item) => sum + item.qty * item.price, 0);
-
-  const handleRemove = (index) => {
-    setCartItems((prev) => prev.filter((_, i) => i !== index));
-  };
+  const {
+    cartItems,
+    showCart,
+    setShowCart,
+    incrementQty,
+    decrementQty,
+    subtotal,
+    clearCart,
+  } = useCart();
 
   const handleWhatsAppCheckout = () => {
     const phone = "3472554826";
@@ -20,7 +22,7 @@ const CartSidebar = () => {
       .join("\n");
 
     const finalMessage = encodeURIComponent(
-      `Hello, I'd like to place the following order:\n\n${orderText}\n\nTotal: $${total.toFixed(2)}`
+      `Hello, I'd like to place the following order:\n\n${orderText}\n\nTotal: $${subtotal.toFixed(2)}`
     );
 
     window.open(`https://wa.me/${phone}?text=${finalMessage}`, "_blank");
@@ -28,17 +30,41 @@ const CartSidebar = () => {
 
   return (
     <div
-      className="cart-sidebar position-fixed top-0 end-0 h-100 bg-white shadow-lg px-4 pt-4 pb-5"
+      className="cart-sidebar position-fixed top-0 end-0 h-100"
       style={{
-        width: "50vw",
+        width: "100%",
+        maxWidth: "450px",
+        background: "#fefefe",
+        padding: "1.5rem",
+        boxShadow: "0 0 20px rgba(0,0,0,0.1)",
         transform: showCart ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.3s ease-in-out",
         zIndex: 9999,
         overflowY: "auto",
       }}
     >
+      <style>{`
+        @keyframes fadeInCart {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+          .cart-sidebar {
+            width: 100vw !important;
+            padding: 1rem !important;
+          }
+        }
+
+        .btn-qty:hover {
+          background: #e0e0e0 !important;
+        }
+      `}</style>
+
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h5 className="m-0">🛒 Your Cart</h5>
+        <h5 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "0.5px" }}>
+          🛒 Your Cart
+        </h5>
         <button className="btn-close" onClick={() => setShowCart(false)} />
       </div>
 
@@ -48,48 +74,136 @@ const CartSidebar = () => {
         <>
           <div className="d-flex flex-column gap-4">
             {cartItems.map((item, idx) => (
-              <div key={idx} className="border-bottom pb-3">
-                <div className="d-flex gap-3">
+              <div
+                key={idx}
+                className="cart-item"
+                style={{
+                  background: "#ffffff",
+                  borderRadius: "12px",
+                  padding: "1rem",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                  animation: "fadeInCart 0.3s ease-in-out",
+                }}
+              >
+                <div
+                  className="d-flex gap-3"
+                  style={{ flexWrap: "wrap", alignItems: "flex-start" }}
+                >
                   <img
                     src={item.image}
                     alt={item.name}
-                    style={{ width: 60, height: 60, objectFit: "contain", borderRadius: 8 }}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      objectFit: "contain",
+                      borderRadius: 8,
+                      flexShrink: 0,
+                    }}
                   />
-                  <div className="flex-grow-1">
-                    <div className="fw-semibold" style={{ fontSize: "0.95rem" }}>
+                  <div style={{ flexGrow: 1, minWidth: 0 }}>
+                    <div
+                      style={{ fontSize: "1rem", fontWeight: "600", lineHeight: 1.3 }}
+                    >
                       {item.brand} {item.volume}
                     </div>
-                    <div className="text-muted small">{item.name}</div>
-                    <div className="text-muted small">{item.qty} x ${item.price}</div>
+                    <div style={{ fontSize: "0.85rem", color: "#666" }}>
+                      {item.name}
+                    </div>
+                    <div style={{ fontSize: "0.85rem", color: "#888" }}>
+                      {item.qty} x ${item.price}
+                    </div>
+
+                    <div className="d-flex align-items-center gap-2 mt-2">
+                      <button
+                        className="btn-qty"
+                        onClick={() => decrementQty(item._id, item.volume)}
+                        style={{
+                          border: "none",
+                          background: "#f1f1f1",
+                          padding: "6px 10px",
+                          borderRadius: "8px",
+                          fontSize: "1rem",
+                          transition: "0.2s",
+                        }}
+                      >
+                        ➖
+                      </button>
+                      <span className="fw-semibold">{item.qty}</span>
+                      <button
+                        className="btn-qty"
+                        onClick={() => incrementQty(item._id, item.volume)}
+                        style={{
+                          border: "none",
+                          background: "#f1f1f1",
+                          padding: "6px 10px",
+                          borderRadius: "8px",
+                          fontSize: "1rem",
+                          transition: "0.2s",
+                        }}
+                      >
+                        ➕
+                      </button>
+                    </div>
                   </div>
-                  <div className="fw-bold text-end" style={{ minWidth: 60 }}>
+                  <div
+                    style={{
+                      minWidth: 60,
+                      fontWeight: "600",
+                      textAlign: "right",
+                      fontSize: "0.95rem",
+                      color: "#111",
+                    }}
+                  >
                     ${parseFloat(item.qty * item.price).toFixed(2)}
                   </div>
-                </div>
-                <div className="mt-2">
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => handleRemove(idx)}
-                  >
-                    Remove ❌
-                  </button>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 pt-3 border-top">
-            <div className="d-flex justify-content-between fw-bold fs-5 mb-3">
-              <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
+          <div
+            className="mt-4 pt-3"
+            style={{ borderTop: "2px solid #eee", marginTop: "1.5rem" }}
+          >
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>Total:</span>
+              <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>
+                ${subtotal.toFixed(2)}
+              </span>
             </div>
 
-            <button
-              className="btn btn-success w-100 fw-semibold py-2"
-              onClick={handleWhatsAppCheckout}
-            >
-              ✅ Checkout via WhatsApp
-            </button>
+            <div className="d-flex flex-column gap-2">
+              <button
+                onClick={handleWhatsAppCheckout}
+                style={{
+                  backgroundColor: "#28a745",
+                  color: "white",
+                  fontWeight: "600",
+                  borderRadius: "10px",
+                  padding: "12px",
+                  fontSize: "1rem",
+                  border: "none",
+                  transition: "0.2s",
+                }}
+              >
+                Checkout via WhatsApp
+              </button>
+              <button
+                onClick={clearCart}
+                style={{
+                  backgroundColor: "white",
+                  color: "#dc3545",
+                  border: "2px solid #dc3545",
+                  fontWeight: "600",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  fontSize: "0.95rem",
+                  transition: "0.2s",
+                }}
+              >
+                🗑️ Clear Cart
+              </button>
+            </div>
           </div>
         </>
       )}

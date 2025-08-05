@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+
+ 
 const {
   getAllProducts,
   createProduct,
@@ -8,9 +11,11 @@ const {
 } = require('../controllers/productController');
 
 const Product = require('../models/Product');
-const mongoose = require('mongoose');
 
-// ✅ Temporary inline Category model
+// ✅ Import auth middleware
+const { authenticate, authorize } = require('../middleware/auth');
+
+// ✅ Inline Category model
 const Category = mongoose.model(
   'Category',
   new mongoose.Schema({
@@ -20,10 +25,10 @@ const Category = mongoose.model(
   'categories' // explicitly use 'categories' collection
 );
 
-// ✅ GET all products
+// ✅ GET all products (public)
 router.get('/', getAllProducts);
 
-// ✅ GET products by category (case-insensitive)
+// ✅ GET products by category (case-insensitive, public)
 router.get('/category/:name', async (req, res) => {
   try {
     const { name } = req.params;
@@ -36,7 +41,7 @@ router.get('/category/:name', async (req, res) => {
   }
 });
 
-// ✅ GET all categories (for frontend sidebar)
+// ✅ GET all categories (public)
 router.get('/categories', async (req, res) => {
   try {
     const categories = await Category.find().sort({ name: 1 });
@@ -47,13 +52,13 @@ router.get('/categories', async (req, res) => {
   }
 });
 
-// ✅ POST to create a new product
-router.post('/', createProduct);
+// ✅ CREATE a product (admin-only)
+router.post('/', authenticate, authorize(['admin']), createProduct);
 
-// ✅ PUT to update a product by ID
-router.put('/:id', updateProduct);
+// ✅ UPDATE a product by ID (admin-only)
+router.put('/:id', authenticate, authorize(['admin']), updateProduct);
 
-// ✅ DELETE a product by ID
-router.delete('/:id', deleteProduct);
+// ✅ DELETE a product by ID (admin-only)
+router.delete('/:id', authenticate, authorize(['admin']), deleteProduct);
 
 module.exports = router;

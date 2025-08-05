@@ -34,34 +34,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ===== Header Image + Glass Navbar ===== */
-.header-image-wrapper {
-  position: relative;
-  height: 95vh; /* 65% of the viewport height */
-  overflow: hidden;
-}
-
-.header-img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  filter: brightness(70%);
-}
-
-.glass-navbar {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  max-width: 95%;
-  padding: 0.75rem 1.25rem;
-}
-
 .store-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
@@ -128,7 +100,7 @@ a:hover {
 .footer-glass-wrapper {
   position: relative;
   width: 100%;
-  min-height: 50vh; /* Covers bottom half of screen */
+  min-height: 50vh;
   overflow: hidden;
 }
 
@@ -141,38 +113,40 @@ a:hover {
   object-fit: cover;
   object-position: center;
   z-index: 1;
-  filter: brightness(70%) saturate(130%);
+  filter: brightness(65%) saturate(120%);
 }
 
 .footer-glass-content {
   position: relative;
   z-index: 2;
-  width: 100vw; /* Full viewport width */
-  height: 100%;
-  padding: 4rem 3rem;
-  background: rgba(30, 20, 20, 0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(6px);
-  border-radius: 0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  padding: 4rem 2rem;
+  background: rgba(20, 15, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   color: white;
   text-align: left;
+  border-radius: 0;
 }
 
+/* Typography and layout */
 .footer-heading {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: #FFD2A6;
   margin-bottom: 1rem;
+  letter-spacing: 0.5px;
 }
 
 .footer-link {
   color: #ffffff;
   text-decoration: none;
-  display: block;
+  display: inline-block;
   margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
 }
 
 .footer-link:hover {
@@ -180,12 +154,61 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Description text */
+.footer-desc {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Divider */
 .footer-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
-  margin-top: 2rem;
+  margin: 2rem 0 1rem;
+}
+
+/* Copyright */
+.footer-copyright {
+  color: #ccc;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-glass-content {
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-heading {
+    font-size: 1rem;
+  }
+
+  .footer-link {
+    font-size: 0.9rem;
+  }
+
+  .footer-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-glass-content {
+    padding: 2rem 1rem;
+  }
 }
 
 .search-input::placeholder {
   color: white;
   opacity: 1; /* Optional: make sure it's fully visible */
 }
+
+
+/* Show .btn on hover */
+.group:hover .btn {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+

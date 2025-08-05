@@ -1,6 +1,6 @@
-// ✅ Admin.jsx (Enhanced Grid Layout with Subcategory Support)
 import React, { useEffect, useState } from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
+import { useNavigate } from "react-router-dom";
 
 const categoryMap = {
   Whiskey: ["Canadian", "Flavored", "American", "Irish", "Bourbon", "Single Malt", "More Whiskey", "Scotch", "Rye"],
@@ -18,6 +18,7 @@ const categoryMap = {
 };
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     productName: "",
     tagline: "",
@@ -45,11 +46,40 @@ export default function Admin() {
   const [editingProductId, setEditingProductId] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/products")
+    fetch("http://localhost:4000/api/admin/verify", {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
+      .then((data) => {
+        if (data.role !== "admin" && data.user?.role !== "admin") throw new Error("Unauthorized");
+      })
+      .catch(() => navigate("/login"));
+  }, [navigate]);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/products", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("❌ Failed to fetch products", err));
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("http://localhost:4000/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      navigate("/login");
+    } catch (err) {
+      console.error("❌ Logout failed", err);
+      alert("Logout failed");
+    }
+  };
 
   const handleSubmit = () => {
     if (!formData.image) return alert("Please upload an image.");
@@ -57,6 +87,8 @@ export default function Admin() {
     const url = editingProductId
       ? `http://localhost:4000/api/products/${editingProductId}`
       : "http://localhost:4000/api/products";
+
+    const method = editingProductId ? "PUT" : "POST";
 
     const payload = {
       name: formData.productName,
@@ -74,50 +106,73 @@ export default function Admin() {
     };
 
     fetch(url, {
-      method: editingProductId ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json" },
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
       body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save product");
+        return res.json();
+      })
       .then(() => {
         alert("✅ Product saved");
-        fetch("http://localhost:4000/api/products")
-          .then((res) => res.json())
-          .then((data) => setProducts(data));
-        setEditingProductId(null);
-        setFormData({
-          productName: "",
-          tagline: "",
-          description: "",
-          volume: "",
-          alcoholPercent: "",
-          actualPrice: "",
-          discount: "",
-          sellingPrice: "",
-          stock: "",
-          category: "",
-          subcategory: "",
-          origin: "",
-          brand: "",
-          image: null,
-          agree: false,
-          onSale: false,
-          bestSeller: false,
-          trending: false,
-          newArrival: false,
+        return fetch("http://localhost:4000/api/products", {
+          credentials: "include",
         });
-      });
+      })
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => alert(err.message));
+
+    setEditingProductId(null);
+    setFormData({
+      productName: "",
+      tagline: "",
+      description: "",
+      volume: "",
+      alcoholPercent: "",
+      actualPrice: "",
+      discount: "",
+      sellingPrice: "",
+      stock: "",
+      category: "",
+      subcategory: "",
+      origin: "",
+      brand: "",
+      image: null,
+      agree: false,
+      onSale: false,
+      bestSeller: false,
+      trending: false,
+      newArrival: false,
+    });
   };
 
   const handleDelete = (id) => {
     if (!window.confirm("Delete this product?")) return;
-    fetch(`http://localhost:4000/api/products/${id}`, { method: "DELETE" })
+    fetch(`http://localhost:4000/api/products/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    })
       .then(() => setProducts(products.filter((p) => p._id !== id)))
       .catch((err) => alert("❌ Delete failed"));
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 bg-white shadow rounded">
+    <div className="max-w-7xl mx-auto p-6 bg-white shadow rounded relative">
+      {/* 🔐 Logout Button */}
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
+      </div>
+
       <h2 className="text-2xl font-bold mb-4">{editingProductId ? "Edit" : "Add / Edit Liquor Product"}</h2>
 
       <input
