@@ -4,7 +4,7 @@ import { useCart } from "../context/CartContext";
 import "./Header.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const Header = () => {
   const { cartItems, setShowCart } = useCart();
   const cartCount = cartItems.reduce((total, item) => total + item.qty, 0);
@@ -29,7 +29,7 @@ const Header = () => {
       }
       try {
         const res = await axios.get(
-          `http://localhost:4000/api/products/search?query=${searchValue}`
+          `${backendUrl}/api/products/search?query=${searchValue}`
         );
         const data = Array.isArray(res.data) ? res.data : [];
         setSuggestions(data.slice(0, 5));

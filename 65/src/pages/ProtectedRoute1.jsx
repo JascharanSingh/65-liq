@@ -1,6 +1,8 @@
-// src/components/ProtectedRoute.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// ✅ Use .env-based backend URL
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function ProtectedRoute({ children }) {
   const [checking, setChecking] = useState(true);
@@ -10,7 +12,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/admin/verify", {
+        const res = await fetch(`${backendUrl}/api/admin/verify`, {
           method: "GET",
           credentials: "include",
         });
@@ -18,10 +20,10 @@ export default function ProtectedRoute({ children }) {
         if (!res.ok) throw new Error("Not authenticated");
 
         const data = await res.json();
-        if (data?.user?.role === "admin") {
+        if (data?.user?.role === "admin" || data?.role === "admin") {
           setAllowed(true);
         } else {
-          navigate("/login");
+          throw new Error("Unauthorized");
         }
       } catch (err) {
         console.warn("Redirecting to login:", err.message);
@@ -36,8 +38,8 @@ export default function ProtectedRoute({ children }) {
 
   if (checking) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        🔐 Checking access...
+      <div className="flex justify-center items-center h-screen text-gray-600">
+        🔐 Verifying admin access...
       </div>
     );
   }

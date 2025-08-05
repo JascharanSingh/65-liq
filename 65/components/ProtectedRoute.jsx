@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
+// ✅ Use environment variable for backend URL
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export default function ProtectedRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [checking, setChecking] = useState(true);
@@ -8,13 +11,17 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const verifyAdmin = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/admin/verify", {
+        const res = await fetch(`${backendUrl}/api/admin/verify`, {
           method: "GET",
-          credentials: "include",
+          credentials: "include", // ✅ Required for cookies
         });
 
         if (!res.ok) throw new Error("Not authenticated");
-        setIsAuthenticated(true);
+
+        const data = await res.json();
+        const isAdmin = data?.user?.role === "admin" || data?.role === "admin";
+
+        setIsAuthenticated(isAdmin);
       } catch (err) {
         console.warn("Redirecting to login:", err.message);
         setIsAuthenticated(false);
@@ -28,6 +35,8 @@ export default function ProtectedRoute({ children }) {
 
   if (checking)
     return <div className="text-center py-10">🔐 Verifying access...</div>;
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+
   return children;
 }

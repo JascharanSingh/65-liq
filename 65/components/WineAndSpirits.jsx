@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import CategorySidebar from "./products-bottles/CategorySidebar";
@@ -6,6 +6,9 @@ import ProductGrid from "./products-bottles/ProductGrid";
 import "./WineAndSpirits.css";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
+
+// ✅ Use backend URL from environment
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const WineAndSpirits = () => {
   const query = useQuery();
@@ -19,7 +22,7 @@ const WineAndSpirits = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // ⬅️ Toggle sidebar for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSelect = (category, subcategory = "All") => {
     setSelectedCategory(category);
@@ -27,12 +30,12 @@ const WineAndSpirits = () => {
     if (category === "Shop") {
       navigate("/wine-and-spirits", { replace: true });
     }
-    setSidebarOpen(false); // Auto close sidebar on selection (mobile)
+    setSidebarOpen(false);
   };
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:4000/api/products")
+    fetch(`${backendUrl}/api/products`)
       .then((res) => res.json())
       .then((data) => {
         setShopProducts(data);
@@ -47,7 +50,7 @@ const WineAndSpirits = () => {
   useEffect(() => {
     if (selectedCategory !== "Shop" && selectedCategory !== "Search Results") {
       setLoading(true);
-      fetch(`http://localhost:4000/api/products/category/${selectedCategory}`)
+      fetch(`${backendUrl}/api/products/category/${selectedCategory}`)
         .then((res) => res.json())
         .then((data) => {
           setCategoryProducts(data);
@@ -69,7 +72,7 @@ const WineAndSpirits = () => {
   useEffect(() => {
     if (searchQuery) {
       setLoading(true);
-      fetch(`http://localhost:4000/api/products/search?query=${searchQuery}`)
+      fetch(`${backendUrl}/api/products/search?query=${searchQuery}`)
         .then((res) => res.json())
         .then((data) => {
           setSearchResults(data);
@@ -186,8 +189,6 @@ const WineAndSpirits = () => {
               sidebarOpen ? "d-block" : "d-none"
             } d-md-block`}
           >
-            {" "}
-            {/* Responsive toggle */}
             <div
               style={{
                 position: "sticky",

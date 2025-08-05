@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// ✅ Environment-based backend URL
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,20 +13,20 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-  
+
     try {
-      const res = await fetch("http://localhost:4000/api/admin/login", {
+      const res = await fetch(`${backendUrl}/api/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // ✅ important for cookies
+        credentials: "include", // ✅ required for cookies
         body: JSON.stringify({ email, password }),
       });
-  
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
-  
-      console.log("✅ Login success, navigating to /admin");
-      navigate("/admin"); 
+
+      console.log("✅ Login success");
+      navigate("/admin");
     } catch (err) {
       setError(err.message);
     }
@@ -49,6 +52,7 @@ export default function Login() {
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           autoComplete="username"
         />
+
         <input
           type="password"
           placeholder="Password"
