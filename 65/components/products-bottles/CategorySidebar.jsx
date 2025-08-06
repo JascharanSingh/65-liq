@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 const CategorySidebar = ({ onSelect, selectedCategory, selectedSubcategory }) => {
   const [categories, setCategories] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
-    fetch("http://localhost:4000/api/products/categories")
+    fetch("${backendUrl}/api/products/categories")
       .then((res) => res.json())
       .then((data) => {
         // Ensure 'All' is the first subcategory for each category
