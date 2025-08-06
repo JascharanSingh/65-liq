@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import PromoBanner from "../components/PromoBanner"
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WineAndSpirits from "../components/WineAndSpirits";
@@ -14,7 +14,7 @@ import Store from "./pages/Store";
 import Wedding from "./pages/Weddings";
 import { CartProvider } from "../context/CartContext";
 import CartSidebar from "../components/products-bottles/CartSidebar";
-
+import EventsSection from "../components/EventsSection";  
 function App() {
   return (
     <CartProvider>
@@ -80,9 +80,13 @@ function App() {
               <div className="d-flex flex-column min-vh-100">
                 <div className="flex-grow-1 position-relative">
                   <Header />
+                  <div>
+      <PromoBanner />
+    </div>
                   <WineAndSpirits />
                   <CartSidebar />
                 </div>
+              <EventsSection/>
                 <Footer />
               </div>
             }

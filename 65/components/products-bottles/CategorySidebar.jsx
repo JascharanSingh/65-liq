@@ -5,7 +5,7 @@ const CategorySidebar = ({ onSelect, selectedCategory, selectedSubcategory }) =>
   const [expandedCategory, setExpandedCategory] = useState(null);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
-    fetch("${backendUrl}/api/products/categories")
+    fetch(`${backendUrl}/api/products/categories`)
       .then((res) => res.json())
       .then((data) => {
         // Ensure 'All' is the first subcategory for each category
