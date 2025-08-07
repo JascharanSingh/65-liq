@@ -246,7 +246,7 @@ const Header = () => {
                 <span className="hero-title-line hero-title-accent">Collection</span>
               </h1>
               <p className="hero-subtitle">
-                Finest Spirits Handpicked for Connoisseurs
+                Wine & Spirits Preferred By Demography
               </p>
             </div>
 
