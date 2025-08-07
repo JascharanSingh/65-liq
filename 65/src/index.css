@@ -212,3 +212,49 @@ a:hover {
   transform: translateY(0) !important;
 }
 
+
+/* product grid < > button alignment */
+.scroll-wrapper {
+  position: relative;
+}
+
+/* Shared styles for both buttons */
+.btn-scroll {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: white;
+  border: 2px solid #E97451;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #E97451;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-scroll svg {
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  display: block;
+  margin: 0 auto;
+}
+.btn-scroll:hover {
+  background-color: #E97451;
+  color: white;
+}
+
+/* Position the left and right buttons */
+.btn-scroll.left {
+  left: -20px; /* Adjust as needed */
+}
+
+.btn-scroll.right {
+  right: -20px; /* Adjust as needed */
+}

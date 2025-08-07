@@ -303,22 +303,9 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.navbar-scrolled  .cart-button {
-  background: rgba(248, 249, 250, 0.8);
-  border-color: rgba(0, 0, 0, 0.08);
-}
-/* === Pickup Icon Color Change on Scroll === */
-.pickup-icon {
-  font-size: 1.1rem;
-  color: #deaa47; /* default gold */
-  transition: color 0.3s ease;
-}
-
-.navbar-scrolled .pickup-icon {
-  color: black; /* change to black when scrolled */
+  /* 🔥 FIX: Allow badge to overflow */
+  overflow: visible;
+  z-index: 10;
 }
 
 .cart-button:hover {
@@ -348,24 +335,29 @@
   transform: scale(1.1);
 }
 
+/* ✅ FIXED: Badge is now visible, centered, and works for 1–99+ */
 .cart-badge {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -6px;
+  right: -6px;
   background: linear-gradient(135deg, #E97451, #d6633d);
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   min-width: 20px;
   height: 20px;
-  border-radius: 50%;
+  padding: 0 5px;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(233, 116, 81, 0.4);
   animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  line-height: 1;
+  z-index: 99;
 }
 
+/* Ripple Animation */
 .cart-ripple {
   position: absolute;
   top: 50%;
@@ -381,6 +373,34 @@
 .cart-button:hover .cart-ripple {
   width: 80px;
   height: 80px;
+}
+
+/* Optional bounce animation (already used) */
+@keyframes bounce {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.navbar-scrolled  .cart-button {
+  background: rgba(248, 249, 250, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+/* === Pickup Icon Color Change on Scroll === */
+.pickup-icon {
+  font-size: 1.1rem;
+  color: #deaa47; /* default gold */
+  transition: color 0.3s ease;
+}
+
+.navbar-scrolled .pickup-icon {
+  color: black; /* change to black when scrolled */
 }
 
 /* Hero Section */
