@@ -1,88 +1,126 @@
-// ✅ productController.js
 const Product = require("../models/Product");
 
-// GET all products
+// ✅ GET all products (with pagination & optional category filter)
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (req.query.category) {
+      filter.category = { $regex: new RegExp(`^${req.query.category}$`, "i") };
+    }
+
+    const products = await Product.find(filter).skip(skip).limit(limit);
+    const total = await Product.countDocuments(filter);
+
+    res.json({ products, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("❌ Error in getAllProducts:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// CREATE product
+// ✅ CREATE product
 exports.createProduct = async (req, res) => {
   try {
-    console.log("📥 Creating Product:", req.body); // ✅ Full payload log
-    console.log("✅ Volume:", req.body.volume);
-    console.log("✅ Brand:", req.body.brand);
+    const {
+      name,
+      price,
+      description,
+      image,
+      category,
+      subcategory,
+      onSale,
+      brand,
+      volume,
+      alcoholPercent,
+      stock,
+      origin,
+      tagline,
+      bestSeller,
+      trending,
+      newArrival,
+    } = req.body;
+
+    if (!name || !price || !image || !category) {
+      return res.status(400).json({ message: "Missing required fields." });
+    }
 
     const newProduct = new Product({
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      image: req.body.image,
-      category: req.body.category,
-      subcategory: req.body.subcategory,
-      onSale: req.body.onSale,
-      brand: req.body.brand,
-      volume: req.body.volume,
-      alcoholPercent: req.body.alcoholPercent,
-      stock: req.body.stock,
-      origin: req.body.origin,
-      tagline: req.body.tagline,
-      bestSeller: req.body.bestSeller || false,
-      trending: req.body.trending || false,
-      newArrival: req.body.newArrival || false,
+      name: name.trim(),
+      price: price,
+      description: description?.trim(),
+      image,
+      category: category.trim(),
+      subcategory: subcategory?.trim(),
+      onSale: !!onSale,
+      brand: brand?.trim(),
+      volume: volume?.trim(),
+      alcoholPercent: alcoholPercent?.trim(),
+      stock: stock?.trim(),
+      origin: origin?.trim(),
+      tagline: tagline?.trim(),
+      bestSeller: !!bestSeller,
+      trending: !!trending,
+      newArrival: !!newArrival,
     });
 
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
     console.error("❌ Error in createProduct:", err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// UPDATE product
+// ✅ UPDATE product
 exports.updateProduct = async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        image: req.body.image,
-        category: req.body.category,
-        subcategory: req.body.subcategory,
-        onSale: req.body.onSale,
-        brand: req.body.brand,
-        volume: req.body.volume,
-        alcoholPercent: req.body.alcoholPercent,
-        stock: req.body.stock,
-        origin: req.body.origin,
-        tagline: req.body.tagline,
-        bestSeller: req.body.bestSeller || false,
-        trending: req.body.trending || false,
-        newArrival: req.body.newArrival || false,
-      },
-      { new: true }
-    );
+    const update = {
+      name: req.body.name?.trim(),
+      price: req.body.price,
+      description: req.body.description?.trim(),
+      image: req.body.image,
+      category: req.body.category?.trim(),
+      subcategory: req.body.subcategory?.trim(),
+      onSale: !!req.body.onSale,
+      brand: req.body.brand?.trim(),
+      volume: req.body.volume?.trim(),
+      alcoholPercent: req.body.alcoholPercent?.trim(),
+      stock: req.body.stock?.trim(),
+      origin: req.body.origin?.trim(),
+      tagline: req.body.tagline?.trim(),
+      bestSeller: !!req.body.bestSeller,
+      trending: !!req.body.trending,
+      newArrival: !!req.body.newArrival,
+    };
+
+    const updated = await Product.findByIdAndUpdate(req.params.id, update, { new: true });
+
+    if (!updated) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
     res.json(updated);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("❌ Error in updateProduct:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// DELETE product
+// ✅ DELETE product
 exports.deleteProduct = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
     res.json({ message: "Product deleted" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("❌ Error in deleteProduct:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };

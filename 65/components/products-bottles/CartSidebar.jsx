@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useCart } from "../../context/CartContext";
 
 const CartSidebar = () => {
@@ -27,6 +27,81 @@ const CartSidebar = () => {
 
     window.open(`https://wa.me/${phone}?text=${finalMessage}`, "_blank");
   };
+
+  // ✅ Memoized cart render
+  const renderedItems = useMemo(
+    () =>
+      cartItems.map((item, idx) => (
+        <div
+          key={idx}
+          className="cart-item"
+          style={{
+            background: "#ffffff",
+            borderRadius: "12px",
+            padding: "1rem",
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+            animation: "fadeInCart 0.3s ease-in-out",
+          }}
+        >
+          <div
+            className="d-flex gap-3"
+            style={{ flexWrap: "wrap", alignItems: "flex-start" }}
+          >
+            <img
+              src={item.image}
+              alt={item.name}
+              loading="lazy"
+              style={{
+                width: 60,
+                height: 60,
+                objectFit: "contain",
+                borderRadius: 8,
+                flexShrink: 0,
+              }}
+            />
+            <div style={{ flexGrow: 1, minWidth: 0 }}>
+              <div style={{ fontSize: "1rem", fontWeight: "600", lineHeight: 1.3 }}>
+                {item.brand} {item.volume}
+              </div>
+              <div style={{ fontSize: "0.85rem", color: "#666" }}>{item.name}</div>
+              <div style={{ fontSize: "0.85rem", color: "#888" }}>
+                {item.qty} x ${item.price}
+              </div>
+
+              <div className="d-flex align-items-center gap-2 mt-2">
+                <button
+                  className="btn-qty"
+                  onClick={() => decrementQty(item._id, item.volume)}
+                  style={qtyBtnStyle}
+                >
+                  ➖
+                </button>
+                <span className="fw-semibold">{item.qty}</span>
+                <button
+                  className="btn-qty"
+                  onClick={() => incrementQty(item._id, item.volume)}
+                  style={qtyBtnStyle}
+                >
+                  ➕
+                </button>
+              </div>
+            </div>
+            <div
+              style={{
+                minWidth: 60,
+                fontWeight: "600",
+                textAlign: "right",
+                fontSize: "0.95rem",
+                color: "#111",
+              }}
+            >
+              ${parseFloat(item.qty * item.price).toFixed(2)}
+            </div>
+          </div>
+        </div>
+      )),
+    [cartItems, incrementQty, decrementQty]
+  );
 
   return (
     <div
@@ -72,94 +147,7 @@ const CartSidebar = () => {
         <p className="text-muted mt-4">Your cart is empty.</p>
       ) : (
         <>
-          <div className="d-flex flex-column gap-4">
-            {cartItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="cart-item"
-                style={{
-                  background: "#ffffff",
-                  borderRadius: "12px",
-                  padding: "1rem",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
-                  animation: "fadeInCart 0.3s ease-in-out",
-                }}
-              >
-                <div
-                  className="d-flex gap-3"
-                  style={{ flexWrap: "wrap", alignItems: "flex-start" }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      objectFit: "contain",
-                      borderRadius: 8,
-                      flexShrink: 0,
-                    }}
-                  />
-                  <div style={{ flexGrow: 1, minWidth: 0 }}>
-                    <div
-                      style={{ fontSize: "1rem", fontWeight: "600", lineHeight: 1.3 }}
-                    >
-                      {item.brand} {item.volume}
-                    </div>
-                    <div style={{ fontSize: "0.85rem", color: "#666" }}>
-                      {item.name}
-                    </div>
-                    <div style={{ fontSize: "0.85rem", color: "#888" }}>
-                      {item.qty} x ${item.price}
-                    </div>
-
-                    <div className="d-flex align-items-center gap-2 mt-2">
-                      <button
-                        className="btn-qty"
-                        onClick={() => decrementQty(item._id, item.volume)}
-                        style={{
-                          border: "none",
-                          background: "#f1f1f1",
-                          padding: "6px 10px",
-                          borderRadius: "8px",
-                          fontSize: "1rem",
-                          transition: "0.2s",
-                        }}
-                      >
-                        ➖
-                      </button>
-                      <span className="fw-semibold">{item.qty}</span>
-                      <button
-                        className="btn-qty"
-                        onClick={() => incrementQty(item._id, item.volume)}
-                        style={{
-                          border: "none",
-                          background: "#f1f1f1",
-                          padding: "6px 10px",
-                          borderRadius: "8px",
-                          fontSize: "1rem",
-                          transition: "0.2s",
-                        }}
-                      >
-                        ➕
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      minWidth: 60,
-                      fontWeight: "600",
-                      textAlign: "right",
-                      fontSize: "0.95rem",
-                      color: "#111",
-                    }}
-                  >
-                    ${parseFloat(item.qty * item.price).toFixed(2)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="d-flex flex-column gap-4">{renderedItems}</div>
 
           <div
             className="mt-4 pt-3"
@@ -168,38 +156,20 @@ const CartSidebar = () => {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>Total:</span>
               <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>
-                ${subtotal.toFixed(2)}
+                ${Number.isFinite(subtotal) ? subtotal.toFixed(2) : "0.00"}
               </span>
             </div>
 
             <div className="d-flex flex-column gap-2">
               <button
                 onClick={handleWhatsAppCheckout}
-                style={{
-                  backgroundColor: "#28a745",
-                  color: "white",
-                  fontWeight: "600",
-                  borderRadius: "10px",
-                  padding: "12px",
-                  fontSize: "1rem",
-                  border: "none",
-                  transition: "0.2s",
-                }}
+                style={checkoutBtnStyle}
               >
                 Checkout via WhatsApp
               </button>
               <button
                 onClick={clearCart}
-                style={{
-                  backgroundColor: "white",
-                  color: "#dc3545",
-                  border: "2px solid #dc3545",
-                  fontWeight: "600",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  fontSize: "0.95rem",
-                  transition: "0.2s",
-                }}
+                style={clearBtnStyle}
               >
                 🗑️ Clear Cart
               </button>
@@ -209,6 +179,37 @@ const CartSidebar = () => {
       )}
     </div>
   );
+};
+
+const qtyBtnStyle = {
+  border: "none",
+  background: "#f1f1f1",
+  padding: "6px 10px",
+  borderRadius: "8px",
+  fontSize: "1rem",
+  transition: "0.2s",
+};
+
+const checkoutBtnStyle = {
+  backgroundColor: "#28a745",
+  color: "white",
+  fontWeight: "600",
+  borderRadius: "10px",
+  padding: "12px",
+  fontSize: "1rem",
+  border: "none",
+  transition: "0.2s",
+};
+
+const clearBtnStyle = {
+  backgroundColor: "white",
+  color: "#dc3545",
+  border: "2px solid #dc3545",
+  fontWeight: "600",
+  borderRadius: "10px",
+  padding: "10px",
+  fontSize: "0.95rem",
+  transition: "0.2s",
 };
 
 export default CartSidebar;

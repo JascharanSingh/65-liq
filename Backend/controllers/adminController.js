@@ -23,16 +23,24 @@ exports.loginAdmin = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: admin._id, role: admin.role },
+      {
+        id: admin._id,
+        role: admin.role,
+        email: admin.email,
+      },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      {
+        expiresIn: "1h",
+        issuer: "baveda-auth",
+        audience: "baveda-admin",
+      }
     );
 
     // ✅ Send token as secure HttpOnly cookie
     res.clearCookie("token");
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // set to true in production
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Lax",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
@@ -44,7 +52,7 @@ exports.loginAdmin = async (req, res) => {
   }
 };
 
-// GET /api/admin/verify ✅ Added this
+// GET /api/admin/verify
 exports.verifyAdmin = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -53,10 +61,14 @@ exports.verifyAdmin = async (req, res) => {
       return res.status(401).json({ message: "No token provided" });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("🔓 Decoded JWT:", decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      issuer: "baveda-auth",
+      audience: "baveda-admin",
+    });
 
-    // 👇 Return { user: { id, role, iat, exp } } to match frontend expectation
+    // Optionally check expiration manually here if needed
+    // Optionally log IP/device for audit trail
+
     res.status(200).json({ user: decoded });
   } catch (err) {
     console.error("❌ Verify Error:", err.message);
@@ -66,6 +78,11 @@ exports.verifyAdmin = async (req, res) => {
 
 // POST /api/admin/logout
 exports.logoutAdmin = async (req, res) => {
-  res.clearCookie("token");
-  res.status(200).json({ message: "Logged out successfully" });
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (err) {
+    console.error("❌ Logout Error:", err.message);
+    res.status(500).json({ message: "Logout failed" });
+  }
 };

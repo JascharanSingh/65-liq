@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { FaShoppingCart, FaStore, FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaShoppingCart,
+  FaStore,
+  FaSearch,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import CartSidebar from "./products-bottles/CartSidebar";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const Navbar = () => {
-  const { cartItems, setShowCart } = useCart(); // ✅ Real cart context
+  const { cartItems, setShowCart } = useCart();
   const cartCount = cartItems.reduce((total, item) => total + item.qty, 0);
 
   const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -17,20 +29,15 @@ const Navbar = () => {
         setSuggestions([]);
         return;
       }
-      // TODO: Replace mock with actual search API call
-      const mockSuggestions = [
-        { _id: "1", name: "Whiskey Premium" },
-        { _id: "2", name: "Red Wine Cabernet" },
-        { _id: "3", name: "Vodka Crystal" },
-        { _id: "4", name: "Beer Corona" },
-        { _id: "5", name: "Champagne Dom" }
-      ];
-      setSuggestions(
-        mockSuggestions
-          .filter((p) => p.name.toLowerCase().includes(searchValue.toLowerCase()))
-          .slice(0, 5)
-      );
-      setShowSuggestions(true);
+      try {
+        const res = await axios.get(
+          `${backendUrl}/api/products/search?query=${searchValue}`
+        );
+        setSuggestions(res.data.slice(0, 5));
+        setShowSuggestions(true);
+      } catch (err) {
+        console.error("❌ Failed to fetch suggestions:", err.message);
+      }
     };
     const debounce = setTimeout(fetchSuggestions, 300);
     return () => clearTimeout(debounce);
@@ -41,13 +48,13 @@ const Navbar = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchValue.trim()) {
-      console.log("Navigate to search:", searchValue);
+      navigate(`/search?query=${encodeURIComponent(searchValue)}`);
       setShowSuggestions(false);
     }
   };
 
   const handleSuggestionClick = (productName) => {
-    console.log("Navigate to search:", productName);
+    navigate(`/search?query=${encodeURIComponent(productName)}`);
     setSearchValue(productName);
     setShowSuggestions(false);
   };

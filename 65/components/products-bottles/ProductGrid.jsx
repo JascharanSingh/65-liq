@@ -27,6 +27,12 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
     setShowFullDescription(false);
   };
 
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    setQuantity(1);
+    setShowFullDescription(false);
+  };
+
   const ProductModal = () => {
     if (!selectedProduct) return null;
 
@@ -39,13 +45,13 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
           <div className="modal-content p-4">
             <div className="modal-header border-0">
               <h5 className="modal-title">{selectedProduct.brand} {selectedProduct.volume}</h5>
-              <button type="button" className="btn-close" onClick={() => { setSelectedProduct(null); setShowFullDescription(false); }}></button>
+              <button type="button" className="btn-close" onClick={handleCloseModal}></button>
             </div>
             <div className="modal-body d-flex flex-column flex-md-row gap-4">
               <div className="flex-shrink-0" style={{ maxWidth: '250px' }}>
                 <img
                   src={selectedProduct.image || 'https://placehold.co/250x300'}
-                  alt={selectedProduct.name}
+                  alt={selectedProduct.name || 'Product Image'}
                   className="img-fluid rounded"
                   style={{ objectFit: 'contain' }}
                 />
@@ -67,7 +73,11 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
                 <p className="fw-bold" style={{ color: '#E97451' }}>${selectedProduct.price}</p>
                 <div className="mb-3">
                   <label className="form-label">Quantity:</label>
-                  <select className="form-select" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}>
+                  <select
+                    className="form-select"
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  >
                     {[...Array(10).keys()].map((x) => (
                       <option key={x + 1} value={x + 1}>{x + 1}</option>
                     ))}
@@ -106,7 +116,7 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
       >
         <img
           src={product.image || 'https://placehold.co/180x220/F3F4F6/9CA3AF?text=No+Image'}
-          alt={product.name}
+          alt={product.name || 'Product'}
           className="card-img-top"
           style={{ height: '180px', objectFit: 'contain', backgroundColor: '#F9FAFB' }}
         />
@@ -151,16 +161,19 @@ const ProductGrid = ({ products = [], isShopView = false }) => {
     <>
       <ProductModal />
       <div className="scroll-wrapper position-relative">
-        <button className="btn-scroll left" onClick={() => scroll('left')}>
+        <button
+          className="btn-scroll left d-none d-md-block"
+          onClick={() => scroll('left')}
+        >
           <FaChevronLeft />
         </button>
-        <button className="btn-scroll right" onClick={() => scroll('right')}>
+        <button
+          className="btn-scroll right d-none d-md-block"
+          onClick={() => scroll('right')}
+        >
           <FaChevronRight />
         </button>
-        <div
-          className="d-flex gap-3 overflow-auto product-row"
-          ref={scrollRef}
-        >
+        <div className="d-flex gap-3 overflow-auto product-row" ref={scrollRef}>
           {products.map(renderCard)}
         </div>
       </div>

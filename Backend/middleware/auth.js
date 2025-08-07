@@ -1,32 +1,37 @@
 // middleware/auth.js
 const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
 
 const authenticate = async (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
-    console.log("❌ No token received in cookies");
+    console.warn("❌ No token received in cookies");
     return res.status(401).json({ message: "Unauthorized: No token" });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("🔓 Decoded JWT:", decoded);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      issuer: "baveda-auth",
+      audience: "baveda-admin",
+    });
 
     req.user = decoded;
     req.token = token;
+
+    // Optional: log decoded token expiration
+    // console.log("🔓 Authenticated user:", decoded);
+
     next();
   } catch (err) {
-    console.error("❌ JWT error:", err.message);
+    console.error("❌ JWT Verification Error:", err.message);
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
 
-// ✅ This function must be defined and exported
 const authorize = (roles = []) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
+      console.warn(`🚫 Access denied for user: ${req.user?.role}`);
       return res
         .status(403)
         .json({ message: "Access denied: insufficient permissions" });
@@ -35,4 +40,4 @@ const authorize = (roles = []) => {
   };
 };
 
-module.exports = { authenticate, authorize }; // ✅ Make sure this is correct
+module.exports = { authenticate, authorize };

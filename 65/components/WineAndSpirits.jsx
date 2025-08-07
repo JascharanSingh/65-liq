@@ -34,18 +34,20 @@ const WineAndSpirits = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`${backendUrl}/api/products`)
-      .then((res) => res.json())
-      .then((data) => {
-        setShopProducts(data);
-        setError(null);
-      })
-      .catch(() => {
-        setError("Failed to load product data. Check API or server.");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  setLoading(true);
+  fetch(`${backendUrl}/api/products`)
+    .then((res) => res.json())
+    .then((data) => {
+      const items = Array.isArray(data) ? data : data.products;
+      setShopProducts(Array.isArray(items) ? items : []);
+      setError(null);
+    })
+    .catch(() => {
+      setError("Failed to load product data. Check API or server.");
+      setShopProducts([]); // fallback to empty array on error
+    })
+    .finally(() => setLoading(false));
+}, []);
 
   useEffect(() => {
     if (selectedCategory !== "Shop" && selectedCategory !== "Search Results") {
@@ -134,10 +136,10 @@ const WineAndSpirits = () => {
     </div>
   );
 
-  const getFilteredProducts = (products, filterFn) => {
-    const filtered = products.filter(filterFn);
-    return filtered.length > 0 ? filtered : [];
-  };
+ const getFilteredProducts = (products, filterFn) => {
+  if (!Array.isArray(products)) return [];
+  return products.filter(filterFn);
+};
 
   return (
     <section id="shop-section" className="section py-5">

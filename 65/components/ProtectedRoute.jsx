@@ -13,17 +13,20 @@ export default function ProtectedRoute({ children }) {
       try {
         const res = await fetch(`${backendUrl}/api/admin/verify`, {
           method: "GET",
-          credentials: "include", // ✅ Required for cookies
+          credentials: "include", // ✅ Include cookies/session
         });
 
-        if (!res.ok) throw new Error("Not authenticated");
+        if (!res.ok) throw new Error("Unauthorized");
 
         const data = await res.json();
-        const isAdmin = data?.user?.role === "admin" || data?.role === "admin";
+        const isAdmin =
+          data?.user?.role === "admin" ||
+          data?.role === "admin" ||
+          data?.user?.isAdmin;
 
         setIsAuthenticated(isAdmin);
       } catch (err) {
-        console.warn("Redirecting to login:", err.message);
+        console.warn("Access denied:", err.message);
         setIsAuthenticated(false);
       } finally {
         setChecking(false);
@@ -33,10 +36,17 @@ export default function ProtectedRoute({ children }) {
     verifyAdmin();
   }, []);
 
-  if (checking)
-    return <div className="text-center py-10">🔐 Verifying access...</div>;
+  if (checking) {
+    return (
+      <div className="text-center py-5" style={{ fontSize: "1.2rem" }}>
+        🔐 Verifying access...
+      </div>
+    );
+  }
 
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   return children;
 }
