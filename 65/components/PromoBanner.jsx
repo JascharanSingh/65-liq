@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 
 const sliderImages = [
-  "/images/Banner12.jpg", // Replace with your actual image paths
+  "/images/Banner12.jpg",
   "/images/jw.jpg",
   "/images/coctail.jpg",
   "/images/barckdi.jpg",
 ];
+
+const cardImageStyle = {
+  width: "100%",
+  height: "250px",             // Expanded height
+  objectFit: "cover",
+  transition: "transform 0.4s cubic-bezier(.21,1.02,.73,1), box-shadow 0.28s",
+  boxShadow: "0 6px 32px rgba(100,40,0,.13)",
+  cursor: "pointer"
+};
 
 const PromoBanner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,6 +39,16 @@ const PromoBanner = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === sliderImages.length - 1 ? 0 : prevIndex + 1
     );
+  };
+
+  // Hover animation logic for cards
+  const handleImgHover = (e) => {
+    e.currentTarget.style.transform = "scale(1.06) rotate(-1.5deg)";
+    e.currentTarget.style.boxShadow = "0 16px 48px 0 rgba(222,170,71,0.14)";
+  };
+  const handleImgUnhover = (e) => {
+    e.currentTarget.style.transform = "scale(1) rotate(0)";
+    e.currentTarget.style.boxShadow = "0 6px 32px rgba(100,40,0,.13)";
   };
 
   return (
@@ -74,18 +93,22 @@ const PromoBanner = () => {
       <div className="row mt-4 g-3">
         <div className="col-md-6">
           <img
-            src="/images/wine.jpg" // Replace with your actual image
+            src="/images/wine.jpg"
             alt="Shop Wine"
             className="img-fluid rounded shadow"
-            style={{ width: "100%", height: "180px" }}
+            style={cardImageStyle}
+            onMouseEnter={handleImgHover}
+            onMouseLeave={handleImgUnhover}
           />
         </div>
         <div className="col-md-6">
           <img
-            src="/images/hen2.jpg" // Replace with your actual image
+            src="/images/hen2.jpg"
             alt="Shop Spirits"
             className="img-fluid rounded shadow"
-            style={{ width: "100%", height: "180px" }}
+            style={cardImageStyle}
+            onMouseEnter={handleImgHover}
+            onMouseLeave={handleImgUnhover}
           />
         </div>
       </div>

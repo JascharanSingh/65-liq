@@ -1,14 +1,87 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaStar, FaMedal, FaShoppingCart, FaGlassWhiskey, FaWineBottle } from "react-icons/fa";
 import CategorySidebar from "./products-bottles/CategorySidebar";
 import ProductGrid from "./products-bottles/ProductGrid";
 import "./WineAndSpirits.css";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
-
-// ✅ Use backend URL from environment
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+// ---- SectionHeader: modern with icon/underline ----
+const SectionHeader = ({ title, icon }) => (
+  <div className="mb-4 d-flex align-items-center modern-section-header" style={{ position: "relative" }}>
+    <h4
+      className="mb-0 d-flex align-items-center"
+      style={{
+        fontFamily: "Playfair Display, serif",
+        fontWeight: "700",
+        fontSize: "1.65rem",
+        color: "#1F2937",
+        letterSpacing: "-0.5px"
+      }}
+    >
+      {icon && <span style={{ marginRight: 12, display: "flex", alignItems: "center" }}>{icon}</span>}
+      {title}
+    </h4>
+    <div className="modern-section-underline" />
+  </div>
+);
+
+// ---- Modern LoadingSpinner ----
+const LoadingSpinner = () => (
+  <div className="d-flex flex-column justify-content-center align-items-center py-5">
+    <div
+      className="spinner-border"
+      style={{
+        color: "#E97451",
+        width: "2.6rem",
+        height: "2.6rem",
+        borderWidth: "0.35em",
+        animation: "modern-spin 0.9s linear infinite"
+      }}
+      role="status"
+    >
+      <span className="visually-hidden">Loading...</span>
+    </div>
+    <div
+      style={{
+        fontFamily: "Inter, sans-serif",
+        color: "#E97451",
+        marginTop: 14,
+        fontWeight: 500,
+        letterSpacing: "0.02em",
+        fontSize: "1.09rem"
+      }}
+    >
+      Loading products...
+    </div>
+  </div>
+);
+
+const ErrorAlert = ({ message }) => (
+  <div
+    className="alert d-flex align-items-center justify-content-center text-center mb-4"
+    style={{
+      backgroundColor: "#FEF2F2",
+      border: "1px solid #FECACA",
+      borderRadius: "12px",
+      color: "#DC2626",
+      fontFamily: "Inter, sans-serif",
+      fontWeight: "500",
+    }}
+  >
+    <span className="me-2" style={{ fontSize: "1.2rem" }}>
+      ⚠️
+    </span>
+    {message}
+  </div>
+);
+
+const getFilteredProducts = (products, filterFn) => {
+  if (!Array.isArray(products)) return [];
+  return products.filter(filterFn);
+};
 
 const WineAndSpirits = () => {
   const query = useQuery();
@@ -34,20 +107,20 @@ const WineAndSpirits = () => {
   };
 
   useEffect(() => {
-  setLoading(true);
-  fetch(`${backendUrl}/api/products`)
-    .then((res) => res.json())
-    .then((data) => {
-      const items = Array.isArray(data) ? data : data.products;
-      setShopProducts(Array.isArray(items) ? items : []);
-      setError(null);
-    })
-    .catch(() => {
-      setError("Failed to load product data. Check API or server.");
-      setShopProducts([]); // fallback to empty array on error
-    })
-    .finally(() => setLoading(false));
-}, []);
+    setLoading(true);
+    fetch(`${backendUrl}/api/products`)
+      .then((res) => res.json())
+      .then((data) => {
+        const items = Array.isArray(data) ? data : data.products;
+        setShopProducts(Array.isArray(items) ? items : []);
+        setError(null);
+      })
+      .catch(() => {
+        setError("Failed to load product data. Check API or server.");
+        setShopProducts([]); // fallback to empty array on error
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (selectedCategory !== "Shop" && selectedCategory !== "Search Results") {
@@ -89,62 +162,50 @@ const WineAndSpirits = () => {
     }
   }, [searchQuery]);
 
-  const SectionHeader = ({ title }) => (
-    <div className="mb-4 d-flex align-items-center justify-content-between">
-      <h4
-        className="mb-0"
-        style={{
-          fontFamily: "Playfair Display, serif",
-          fontWeight: "600",
-          fontSize: "1.5rem",
-          color: "#1F2937",
-        }}
-      >
-        {title}
-      </h4>
-    </div>
-  );
-
-  const LoadingSpinner = () => (
-    <div className="d-flex justify-content-center align-items-center py-5">
-      <div
-        className="spinner-border"
-        style={{ color: "#E97451", width: "2.5rem", height: "2.5rem" }}
-        role="status"
-      >
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  );
-
-  const ErrorAlert = ({ message }) => (
-    <div
-      className="alert d-flex align-items-center justify-content-center text-center mb-4"
-      style={{
-        backgroundColor: "#FEF2F2",
-        border: "1px solid #FECACA",
-        borderRadius: "12px",
-        color: "#DC2626",
-        fontFamily: "Inter, sans-serif",
-        fontWeight: "500",
-      }}
-    >
-      <span className="me-2" style={{ fontSize: "1.2rem" }}>
-        ⚠️
-      </span>
-      {message}
-    </div>
-  );
-
- const getFilteredProducts = (products, filterFn) => {
-  if (!Array.isArray(products)) return [];
-  return products.filter(filterFn);
-};
+  // ----- Section config for Shop sections -----
+  const shopSections = [
+    {
+      key: "Best Sellers",
+      title: "Best Sellers",
+      filter: (p) => p.bestSeller,
+      icon: <FaMedal style={{ color: "#FFD700" }} />
+    },
+    {
+      key: "On Sale",
+      title: "On Sale",
+      filter: (p) => p.onSale,
+      icon: <FaShoppingCart style={{ color: "#E97451" }} />
+    },
+    {
+      key: "New Arrivals",
+      title: "New Arrivals",
+      filter: (p) => p.newArrival,
+      icon: <FaStar style={{ color: "#E97451" }} />
+    },
+    {
+      key: "Whiskey",
+      title: "Whiskey",
+      filter: (p) => p.category?.toLowerCase() === "whiskey",
+      icon: <FaGlassWhiskey style={{ color: "#d4b277" }} />
+    },
+    {
+      key: "Vodka",
+      title: "Vodka",
+      filter: (p) => p.category?.toLowerCase() === "vodka",
+      icon: <FaWineBottle style={{ color: "#5e7fd7" }} />
+    },
+    {
+      key: "Wine",
+      title: "Wine",
+      filter: (p) => p.category?.toLowerCase() === "wine",
+      icon: <FaWineBottle style={{ color: "#d91e47" }} />
+    }
+  ];
 
   return (
     <section id="shop-section" className="section py-5">
       <div className="container">
-        <div className="text-center mb-5">
+        {/* <div className="text-center mb-5">
           <h2
             className="section-title mb-3"
             style={{
@@ -168,7 +229,7 @@ const WineAndSpirits = () => {
           >
             Discover our curated collection of premium wines and spirits
           </p>
-        </div>
+        </div> */}
 
         {error && <ErrorAlert message={error} />}
 
@@ -226,21 +287,14 @@ const WineAndSpirits = () => {
               <LoadingSpinner />
             ) : selectedCategory === "Search Results" ? (
               <>
-                <SectionHeader title={`Search Results for "${searchQuery}"`} />
+                <SectionHeader title={`Search Results for "${searchQuery}"`} icon={<FaStar style={{ color: "#E97451" }} />} />
                 <ProductGrid products={searchResults} isShopView={false} />
               </>
             ) : selectedCategory === "Shop" ? (
               <div className="shop-sections">
-                {[
-                  ["Best Sellers", (p) => p.bestSeller],
-                  ["On Sale", (p) => p.onSale],
-                  ["New Arrivals", (p) => p.newArrival],
-                  ["Whiskey", (p) => p.category?.toLowerCase() === "whiskey"],
-                  ["Vodka", (p) => p.category?.toLowerCase() === "vodka"],
-                  ["Wine", (p) => p.category?.toLowerCase() === "wine"],
-                ].map(([title, filter]) => (
-                  <div className="mb-5" key={title}>
-                    <SectionHeader title={title} />
+                {shopSections.map(({ key, title, filter, icon }) => (
+                  <div className="mb-5" key={key}>
+                    <SectionHeader title={title} icon={icon} />
                     <ProductGrid
                       products={getFilteredProducts(shopProducts, filter)}
                       isShopView={true}
