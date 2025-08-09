@@ -3,41 +3,16 @@ const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const ONE_HOUR_MS = 60 * 60 * 1000;
-
-// Helpers
-const signToken = (admin) =>
-  jwt.sign(
-    { id: admin._id.toString(), role: admin.role, email: admin.email },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "1h",
-      issuer: "baveda-auth",
-      audience: "baveda-admin",
-    }
-  );
-
-const cookieOptions = () => {
-  const isProd = process.env.NODE_ENV === "production";
-  return {
-    httpOnly: true,
-    secure: isProd,        // Render = HTTPS → true in prod
-    sameSite: isProd ? "None" : "Lax", // cross-site needs None in prod
-    maxAge: ONE_HOUR_MS,
-    path: "/",             // be explicit
-  };
-};
-
 // POST /api/admin/login
 exports.loginAdmin = async (req, res) => {
   try {
-    let { email, password } = req.body || {};
+    const { email, password } = req.body;
+
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required." });
     }
 
-    email = String(email).toLowerCase().trim();
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ email: email.toLowerCase().trim() });
     if (!admin) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -47,30 +22,41 @@ exports.loginAdmin = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = signToken(admin);
-    const opts = cookieOptions();
+    const token = jwt.sign(
+      {
+        id: admin._id,
+        role: admin.role,
+        email: admin.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+        issuer: "baveda-auth",
+        audience: "baveda-admin",
+      }
+    );
 
-    // Clear & set with same options to avoid duplicates
-    res.clearCookie("token", { path: "/", sameSite: opts.sameSite, secure: opts.secure });
-    res.cookie("token", token, opts);
-
-    const expiresAt = Date.now() + ONE_HOUR_MS;
-
-    return res.status(200).json({
-      message: "Login successful",
-      user: { id: admin._id, email: admin.email, role: admin.role },
-      expiresAt,
+    // ✅ Send token as secure HttpOnly cookie
+    res.clearCookie("token");
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+      maxAge: 60 * 60 * 1000, // 1 hour
     });
+
+    return res.status(200).json({ message: "Login successful" });
   } catch (err) {
-    console.error("❌ Login Error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.error("❌ Login Error:", err.message);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 // GET /api/admin/verify
 exports.verifyAdmin = async (req, res) => {
   try {
-    const token = req.cookies?.token;
+    const token = req.cookies.token;
+
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
     }
@@ -80,8 +66,10 @@ exports.verifyAdmin = async (req, res) => {
       audience: "baveda-admin",
     });
 
-    // You could re-fetch admin if you need fresh role/email; here we trust the token
-    return res.status(200).json({ user: decoded });
+    // Optionally check expiration manually here if needed
+    // Optionally log IP/device for audit trail
+
+    res.status(200).json({ user: decoded });
   } catch (err) {
     console.error("❌ Verify Error:", err.message);
     return res.status(403).json({ message: "Invalid or expired token" });
@@ -91,12 +79,10 @@ exports.verifyAdmin = async (req, res) => {
 // POST /api/admin/logout
 exports.logoutAdmin = async (req, res) => {
   try {
-    const opts = cookieOptions();
-    // Clear with same attributes to ensure removal in all browsers
-    res.clearCookie("token", { path: "/", sameSite: opts.sameSite, secure: opts.secure });
-    return res.status(200).json({ message: "Logged out successfully" });
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
-    console.error("❌ Logout Error:", err);
-    return res.status(500).json({ message: "Logout failed" });
+    console.error("❌ Logout Error:", err.message);
+    res.status(500).json({ message: "Logout failed" });
   }
 };

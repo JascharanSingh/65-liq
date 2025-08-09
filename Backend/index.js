@@ -1,87 +1,42 @@
 // index.js
-require("dotenv").config();
 
 const express = require("express");
-// const cors = require("cors"); // not needed with our custom middleware
+const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
+require("dotenv").config();
 
 const app = express();
 
-/* ---------------------- Env sanity checks ---------------------- */
+// ✅ Environment Variable Check
 [
   "MONGO_URI",
   "JWT_SECRET",
   "IMAGEKIT_PUBLIC_KEY",
   "IMAGEKIT_PRIVATE_KEY",
   "IMAGEKIT_URL_ENDPOINT",
-  // Optional: "FRONTEND_URLS", "FRONTEND_URL"
 ].forEach((key) => {
-  if (!process.env[key]) console.warn(`ℹ️ Missing environment variable: ${key}`);
-});
-
-/* ---------------------- CORS (allow-list + preflight) ---------------------- */
-/**
- * If you prefer env-driven origins, set on Render:
- *   FRONTEND_URLS=https://frontend-wp97.onrender.com
- */
-const envOrigins =
-  (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-// Always allow local dev in non-prod
-if (process.env.NODE_ENV !== "production") {
-  envOrigins.push("http://localhost:5173", "http://localhost:4173");
-}
-
-// Fallback if nothing provided
-if (envOrigins.length === 0) {
-  envOrigins.push("https://frontend-wp97.onrender.com");
-}
-
-const allowedOrigins = Array.from(new Set(envOrigins));
-
-// 🔌 Top-level CORS middleware (handles preflight too)
-app.use((req, res, next) => {
-  // Debug header to prove this middleware is running in prod
-  res.setHeader("X-CORS-By", "custom-mw-v1");
-
-  const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Vary", "Origin");
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  if (!process.env[key]) {
+    console.error(`❌ Missing required environment variable: ${key}`);
+    process.exit(1);
   }
-  if (req.method === "OPTIONS") return res.sendStatus(204);
-  next();
 });
 
-// Optional: quick header check
-app.get("/__cors-debug", (req, res) => {
-  res.json({
-    ok: true,
-    originSentByClient: req.headers.origin || null,
-    note: "In the response headers, Access-Control-Allow-Origin should equal your Origin (not *).",
-  });
-});
+// ✅ CORS Configuration
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
-/* ---------------------- Proxies & security ---------------------- */
-// Needed so SameSite=None; Secure cookies behave behind Render's proxy
-if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy", 1);
-}
+// ✅ Middlewares
+app.use(express.json());            // Built-in JSON parser
+app.use(cookieParser());            // Cookie parser
+app.use(helmet());                  // Secure headers
 
-/* ---------------------- Middlewares ---------------------- */
-app.use(express.json());
-app.use(cookieParser());
-app.use(helmet()); // If you enable CSP later, allow ImageKit domains
-
-/* ---------------------- MongoDB ---------------------- */
+// ✅ MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
@@ -90,7 +45,7 @@ mongoose
     process.exit(1);
   });
 
-/* ---------------------- Routes ---------------------- */
+// ✅ Routes
 const adminRoutes = require("./routes/adminAuth");
 const productRoutes = require("./routes/productRoutes");
 const imagekitRoutes = require("./routes/imagekit");
@@ -99,12 +54,13 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/imagekit", imagekitRoutes);
 
-// Health check
-app.get("/api/ping", (_req, res) => res.send("pong"));
+// ✅ Health Check
+app.get("/api/ping", (req, res) => {
+  res.send("pong");
+});
 
-/* ---------------------- Server ---------------------- */
+// ✅ Start Server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log("Allowed CORS origins:", allowedOrigins);
   console.log(`🚀 Server running on port ${PORT}`);
 });
