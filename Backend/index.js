@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors"); // not needed with our custom middleware
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
@@ -22,10 +22,10 @@ const app = express();
   if (!process.env[key]) console.warn(`ℹ️ Missing environment variable: ${key}`);
 });
 
-/* ---------------------- CORS (prod + dev) ---------------------- */
+/* ---------------------- CORS (allow-list + preflight) ---------------------- */
 /**
- * Set FRONTEND_URLS on Render if you want to manage origins via env:
- * e.g. FRONTEND_URLS=https://frontend-wp97.onrender.com
+ * If you want to manage origins via env, set on Render:
+ * FRONTEND_URLS=https://frontend-wp97.onrender.com
  */
 const envOrigins =
   (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || "")
@@ -43,22 +43,30 @@ if (envOrigins.length === 0) {
   envOrigins.push("https://frontend-wp97.onrender.com");
 }
 
-const allowedOrigins = Array.from(new Set(envOrigins)); // de-dup
+const allowedOrigins = Array.from(new Set(envOrigins));
 
-const corsOptions = {
-  origin(origin, cb) {
-    // Allow requests without Origin (e.g., curl, cron, server-to-server)
-    if (!origin) return cb(null, true);
-    return cb(null, allowedOrigins.includes(origin));
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+// 🔌 Top-level CORS middleware (handles preflight too)
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  }
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
 
-// Apply CORS to all routes and explicitly handle preflights
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// Optional: easy header check in prod
+app.get("/__cors-debug", (req, res) => {
+  res.json({
+    ok: true,
+    originSentByClient: req.headers.origin || null,
+    note: "Check response headers in the Network tab: Access-Control-Allow-Origin should match your Origin, not *.",
+  });
+});
 
 /* ---------------------- Proxies & security ---------------------- */
 // Needed so cookies with Secure/SameSite=None behave correctly behind Render's proxy
