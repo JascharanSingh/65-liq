@@ -253,15 +253,15 @@ const WineAndSpirits = () => {
             } d-md-block`}
           >
             <div
-              style={{
-                position: "sticky",
-                top: "20px",
-                backgroundColor: "#ffffff",
-                borderRadius: "16px",
-                padding: "1.5rem",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                border: "1px solid rgba(229, 231, 235, 0.5)",
-              }}
+              // style={{
+              //   position: "sticky",
+              //   top: "20px",
+              //   backgroundColor: "#ffffff",
+              //   borderRadius: "16px",
+              //   // padding: "1.5rem",
+              //   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+              //   border: "1px solid rgba(229, 231, 235, 0.5)",
+              // }}
             >
               <h5
                 className="mb-3"
@@ -271,7 +271,7 @@ const WineAndSpirits = () => {
                   color: "#374151",
                 }}
               >
-                Categories
+               {/* Categories  */}
               </h5>
               <CategorySidebar
                 onSelect={handleSelect}

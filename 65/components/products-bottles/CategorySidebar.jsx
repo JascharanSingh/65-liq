@@ -31,6 +31,7 @@ const CategorySidebar = ({
 }) => {
   const [categories, setCategories] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
+  const [showSubcategories, setShowSubcategories] = useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Use a ref to prevent re-fetching on every render
@@ -84,14 +85,27 @@ const CategorySidebar = ({
   }, [backendUrl, hasFetched]);
 
   const handleCategoryClick = (categoryName) => {
-    // If the clicked category is already expanded, collapse it. Otherwise, expand it.
-    if (expandedCategory === categoryName) {
-      setExpandedCategory(null);
+    // If the clicked category has subcategories, show them first
+    const category = categories.find(cat => cat.name === categoryName);
+    
+    if (category && category.subcategories.length > 1) {
+      if (expandedCategory === categoryName) {
+        // If already expanded, collapse and go to "All"
+        setExpandedCategory(null);
+        setShowSubcategories(false);
+        onSelect(categoryName, "All");
+      } else {
+        // Expand to show subcategories
+        setExpandedCategory(categoryName);
+        setShowSubcategories(true);
+      }
     } else {
-      setExpandedCategory(categoryName);
-      // Automatically select 'All' subcategory when a category is expanded
+      // No subcategories, select directly
+      setExpandedCategory(null);
+      setShowSubcategories(false);
       onSelect(categoryName, "All");
     }
+    
     // Store the selected category in session storage for state persistence
     sessionStorage.setItem("selectedCategory", categoryName);
   };
@@ -100,71 +114,105 @@ const CategorySidebar = ({
     onSelect(categoryName, subcategoryName);
     sessionStorage.setItem("selectedCategory", categoryName);
     sessionStorage.setItem("selectedSubcategory", subcategoryName);
+    
+    // Keep subcategories visible after selection
+  };
+
+  const handleBackToCategories = () => {
+    setExpandedCategory(null);
+    setShowSubcategories(false);
   };
 
   return (
-    <nav className="category-sidebar modern-sidebar-wrapper">
-      {/* Shop Option */}
-      <div
-        onClick={() => {
-          setExpandedCategory(null);
-          onSelect("Shop", "");
-          sessionStorage.setItem("selectedCategory", "Shop");
-          sessionStorage.removeItem("selectedSubcategory");
-        }}
-        className={`modern-sidebar-item ${
-          selectedCategory === "Shop" ? "selected" : ""
-        }`}
-        role="button"
-        tabIndex="0"
-      >
-        <span className="modern-sidebar-icon">{categoryIcons["Shop"]}</span>
-        <span className="modern-sidebar-text">Shop</span>
-      </div>
+    <nav className="ultra-modern-sidebar">
+      {/* Back Button for Subcategories */}
+      {showSubcategories && (
+        <button 
+          className="back-to-categories-btn"
+          onClick={handleBackToCategories}
+        >
+          ← Back to Categories
+        </button>
+      )}
 
-      {/* Dynamic Categories */}
-      {categories.map((cat) => (
-        <div key={cat.name} className="modern-category-container">
-          <div
-            onClick={() => handleCategoryClick(cat.name)}
-            className={`modern-sidebar-item ${
-              selectedCategory === cat.name ? "selected" : ""
-            } ${expandedCategory === cat.name ? "expanded" : ""}`}
-            role="button"
-            tabIndex="0"
-          >
-            <span className="d-flex align-items-center">
-              <span className="modern-sidebar-icon">
-                {categoryIcons[cat.name] || <FaMedal />}
-              </span>
-              <span className="modern-sidebar-text">{cat.name}</span>
-            </span>
-            {cat.subcategories.length > 1 && (
-              <span className="modern-sidebar-expand">▼</span>
-            )}
+      {/* Shop Option - Always Visible */}
+      {!showSubcategories && (
+        <div
+          onClick={() => {
+            setExpandedCategory(null);
+            setShowSubcategories(false);
+            onSelect("Shop", "");
+            sessionStorage.setItem("selectedCategory", "Shop");
+            sessionStorage.removeItem("selectedSubcategory");
+          }}
+          className={`ultra-modern-item ${
+            selectedCategory === "Shop" ? "selected" : ""
+          }`}
+          role="button"
+          tabIndex="0"
+        >
+          <div className="ultra-modern-item-content">
+            <span className="ultra-modern-icon">{categoryIcons["Shop"]}</span>
+            <span className="ultra-modern-text">Shop</span>
           </div>
-          {/* Subcategories List */}
-          {expandedCategory === cat.name && cat.subcategories.length > 1 && (
-            <div className="modern-subcat-list">
-              {cat.subcategories.map((sub) => (
-                <div
+        </div>
+      )}
+
+      {/* Categories or Subcategories */}
+      {!showSubcategories ? (
+        // Main Categories
+        <>
+          {categories.map((cat) => (
+            <div key={cat.name}>
+              <div
+                onClick={() => handleCategoryClick(cat.name)}
+                className={`ultra-modern-item ${
+                  selectedCategory === cat.name ? "selected" : ""
+                }`}
+                role="button"
+                tabIndex="0"
+              >
+                <div className="ultra-modern-item-content">
+                  <span className="ultra-modern-icon">
+                    {categoryIcons[cat.name] || <FaMedal />}
+                  </span>
+                  <span className="ultra-modern-text">{cat.name}</span>
+                </div>
+                {cat.subcategories.length > 1 && (
+                  <span className="ultra-modern-arrow">→</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </>
+      ) : (
+        // Subcategories Display
+        <div className="subcategories-section">
+          <h4 className="subcategories-title">
+            <span className="subcategory-icon">
+              {categoryIcons[expandedCategory] || <FaMedal />}
+            </span>
+            {expandedCategory}
+          </h4>
+          <div className="horizontal-subcategories">
+            {categories
+              .find((cat) => cat.name === expandedCategory)
+              ?.subcategories.map((sub) => (
+                <button
                   key={sub}
-                  onClick={() => handleSubcategoryClick(cat.name, sub)}
-                  className={`modern-sidebar-subcat ${
-                    selectedSubcategory === sub && selectedCategory === cat.name
+                  onClick={() => handleSubcategoryClick(expandedCategory, sub)}
+                  className={`horizontal-subcat-btn ${
+                    selectedSubcategory === sub && selectedCategory === expandedCategory
                       ? "selected"
                       : ""
                   }`}
-                  role="button"
-                  tabIndex="0"
                 >
                   {sub}
-                </div>
+                </button>
               ))}
-            </div>
-          )}
+          </div>
         </div>
-      ))}
+      )}
     </nav>
   );
 };

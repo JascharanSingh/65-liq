@@ -221,7 +221,7 @@ const Header = () => {
         <div className="hero-background">
           <div className="hero-image-wrapper">
             <img
-              src="/images/header-img.jpg"
+              src="/images/testing2.webp"
               alt="Premium whiskey and spirits collection"
               className="hero-image"
             />
@@ -296,11 +296,11 @@ const Header = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="scroll-indicator">
+        {/* <div className="scroll-indicator">
           <div className="scroll-mouse">
             <div className="scroll-wheel"></div>
           </div>
-        </div>
+        </div> */}
       </section>
     </>
   );
