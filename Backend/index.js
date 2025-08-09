@@ -16,16 +16,15 @@ const app = express();
   "IMAGEKIT_PUBLIC_KEY",
   "IMAGEKIT_PRIVATE_KEY",
   "IMAGEKIT_URL_ENDPOINT",
-  // Optional:
-  // "FRONTEND_URLS", "FRONTEND_URL"
+  // Optional: "FRONTEND_URLS", "FRONTEND_URL"
 ].forEach((key) => {
   if (!process.env[key]) console.warn(`ℹ️ Missing environment variable: ${key}`);
 });
 
 /* ---------------------- CORS (allow-list + preflight) ---------------------- */
 /**
- * If you want to manage origins via env, set on Render:
- * FRONTEND_URLS=https://frontend-wp97.onrender.com
+ * If you prefer env-driven origins, set on Render:
+ *   FRONTEND_URLS=https://frontend-wp97.onrender.com
  */
 const envOrigins =
   (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || "")
@@ -38,7 +37,7 @@ if (process.env.NODE_ENV !== "production") {
   envOrigins.push("http://localhost:5173", "http://localhost:4173");
 }
 
-// Fallback to your deployed frontend if none provided
+// Fallback if nothing provided
 if (envOrigins.length === 0) {
   envOrigins.push("https://frontend-wp97.onrender.com");
 }
@@ -47,6 +46,9 @@ const allowedOrigins = Array.from(new Set(envOrigins));
 
 // 🔌 Top-level CORS middleware (handles preflight too)
 app.use((req, res, next) => {
+  // Debug header to prove this middleware is running in prod
+  res.setHeader("X-CORS-By", "custom-mw-v1");
+
   const origin = req.headers.origin;
   if (origin && allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
@@ -59,17 +61,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// Optional: easy header check in prod
+// Optional: quick header check
 app.get("/__cors-debug", (req, res) => {
   res.json({
     ok: true,
     originSentByClient: req.headers.origin || null,
-    note: "Check response headers in the Network tab: Access-Control-Allow-Origin should match your Origin, not *.",
+    note: "In the response headers, Access-Control-Allow-Origin should equal your Origin (not *).",
   });
 });
 
 /* ---------------------- Proxies & security ---------------------- */
-// Needed so cookies with Secure/SameSite=None behave correctly behind Render's proxy
+// Needed so SameSite=None; Secure cookies behave behind Render's proxy
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
@@ -77,7 +79,7 @@ if (process.env.NODE_ENV === "production") {
 /* ---------------------- Middlewares ---------------------- */
 app.use(express.json());
 app.use(cookieParser());
-app.use(helmet()); // If you later enable CSP, remember to allow ImageKit domains
+app.use(helmet()); // If you enable CSP later, allow ImageKit domains
 
 /* ---------------------- MongoDB ---------------------- */
 mongoose
